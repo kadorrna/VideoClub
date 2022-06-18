@@ -7,6 +7,6 @@ describe("ItemView", () => {
   it("renders properly", () => {
     const wrapper = mount(ItemView);
     const div = wrapper.find("div");
-    expect(div.text()).toContain("Item View");
+    expect(div.text()).toContain("Item View.");
   });
 });

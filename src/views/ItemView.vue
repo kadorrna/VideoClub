@@ -3,6 +3,6 @@
 
 <template>
   <main>
-    <div>Item View</div>
+    <div>Item View.</div>
   </main>
 </template>
