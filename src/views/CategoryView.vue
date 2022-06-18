@@ -3,6 +3,6 @@
 
 <template>
   <main>
-    <div>Welcome to video club</div>
+    <div>Category View</div>
   </main>
 </template>
