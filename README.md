@@ -1,6 +1,13 @@
 # VideoClub
 
-This template should help get you started developing with Vue 3 in Vite.
+This is an excercise for a job interview
+
+## Trello board
+Not Jira, so I created a board to follow some steps:
+https://trello.com/b/tLWgNJ74/videoclub
+
+## Project Wiki
+ [Please read the wiki if there are any doubt](https://github.com/kadorrna/VideoClub/wiki)
 
 ## Recommended IDE Setup
 

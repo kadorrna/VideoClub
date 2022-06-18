@@ -1,9 +1,8 @@
 <script setup>
-import TheWelcome from "@/components/TheWelcome.vue";
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+    <div>Welcome to video</div>
   </main>
 </template>
