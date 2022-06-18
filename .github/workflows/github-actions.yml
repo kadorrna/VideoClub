@@ -17,9 +17,4 @@ jobs:
             npm run build
             npm run test:unit
             npm run lint
-      - name: Code Climate Test Reporter
-        uses: aktions/codeclimate-test-reporter@v1
-        with:
-          codeclimate-test-reporter-id: ${{ secrets.c39f4bbd0f09d317d290e4a96cc28af809ee0e6e6c6a305f3023a8fd6c0ba4f7 }}
-          command: after-build
       - run: echo "🍏 This job's status is ${{ job.status }}."
