@@ -1,8 +1,0 @@
-<script setup>
-</script>
-
-<template>
-  <main>
-    <div>Welcome to video club</div>
-  </main>
-</template>
