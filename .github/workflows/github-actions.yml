@@ -13,8 +13,8 @@ jobs:
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
       - name: Run Unit Tessts and Lint files
         run: |
-            npm ci
-            npm run build
-            npm run test:unit
-            npm run lint
+            yarn install --frozen-lockfile
+            yarn build
+            yarn test
+            yarn lint:js
       - run: echo "🍏 This job's status is ${{ job.status }}."
