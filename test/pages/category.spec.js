@@ -1,11 +1,25 @@
-import { mount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import CategoryPage from '@/pages/category.vue'
 
-describe('NuxtLogo', () => {
+describe('CategoryPage', () => {
   test('is a Vue instance', () => {
-    const wrapper = mount(CategoryPage)
+    const mockRoute = {
+      query: {
+        id: 1,
+        categoryName: 'Test',
+      },
+    }
+    const wrapper = shallowMount(CategoryPage, {
+      mocks: {
+        $route: mockRoute,
+      },
+    })
+    wrapper.setData({
+      categoryName: 'Test',
+      genreId: '1',
+    })
     const div = wrapper.find('h1')
     expect(wrapper.vm).toBeTruthy()
-    expect(div.text()).toContain('Category View')
+    expect(div.text()).toContain('Test')
   })
 })
