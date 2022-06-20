@@ -43,4 +43,8 @@ export default {
     baseUrl: process.env.BASE_URL || 'hello world!',
     apiSecret: process.env.API_SECRET || '',
   },
+
+  server: {
+    port: process.env.PORT || 5000,
+  },
 }
