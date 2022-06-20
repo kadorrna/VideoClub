@@ -15,6 +15,6 @@ describe('IndexPage', () => {
 
     const div = wrapper.find('div')
     expect(wrapper.vm).toBeTruthy()
-    expect(div.text()).toContain('Nuxt Genres')
+    expect(div.text()).toContain('Movies Categories')
   })
 })

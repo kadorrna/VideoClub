@@ -3,24 +3,21 @@
     <p v-if="$fetchState.pending">Fetching mountains...</p>
     <p v-else-if="$fetchState.error">An error occurred :(</p>
     <div v-else>
-      <h1>Nuxt Genres</h1>
+      <h1>Movies Categories</h1>
       <ul>
-        <li v-for="(genre, index) in genresData.genres" :key="index">
-          <nuxt-link :to="`/category?id=${genre.id}`">
-            {{ genre.name }}
-          </nuxt-link>
-        </li>
+        <categories-list :categories="genresData.genres" />
       </ul>
       <button @click="$fetch">Refresh</button>
     </div>
   </div>
 </template>
 
-
 <script>
+import CategoriesList from '~/components/CategoriesList.vue'
 
 export default {
   name: 'IndexPage',
+  components: { CategoriesList },
   data() {
     return {
       genresData: {},
@@ -34,7 +31,4 @@ export default {
     })
   },
 }
-
-
-
 </script>
