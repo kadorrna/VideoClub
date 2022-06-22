@@ -13,7 +13,7 @@
       </li>
     </template>
     <template #default>
-      <div class="itemDetailContainer d-flex row">
+      <div class="itemDetailContainer d-flex row mt-5">
         <b-col lg="6" xs="12" md="12" sm="12" class="poster-container">
           <img :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" />
         </b-col>
@@ -32,10 +32,21 @@
           <b-col class="overview">
             {{ movie.overview }}
           </b-col>
-          <div class="col-12">
-            <a :href="`https://www.imdb.com/title/${movie.imdb_id}`">
+          <div class="col-12 d-flex mt-3">
+            <a
+              :href="`https://www.imdb.com/title/${movie.imdb_id}`"
+              class="imdbImg"
+            >
               <img src="~/assets/imdb-icon.png" style="width: 32px" />
             </a>
+            <b-icon
+              icon="plus-circle-fill"
+              font-scale="2"
+              class="addMovieIcon ml-2"
+              :class="[isSelected ? 'text-muted' : '']"
+              :disabled="isSelected"
+              @click="addToCart(movie.id, movie.title)"
+            />
           </div>
         </b-col>
       </div>
@@ -56,7 +67,7 @@ const icon = {
 }
 
 export default {
-  name: 'ItemPage',
+  name: 'MoviePage',
   components: { VideoClubLayout },
   data() {
     return {
@@ -86,6 +97,14 @@ export default {
         return icon[this.movie.status.trim()]
       return ''
     },
+    isSelected() {
+      if (this.movie && this.movie.id) {
+        return this.$store.state.selectedMovies.some(
+          (element) => element.id === this.movie.id
+        )
+      }
+      return ''
+    },
   },
   methods: {
     toggleUIFetching() {
@@ -93,6 +112,12 @@ export default {
     },
     setUIErrorMsg(msg) {
       this.$store.dispatch('setErrorMessageAction', msg)
+    },
+    addToCart(movieId, movieTitle) {
+      this.$store.dispatch('addToSelectedMoviesAction', {
+        id: movieId,
+        title: movieTitle,
+      })
     },
   },
 }
@@ -115,6 +140,17 @@ export default {
 
 .overview {
   font-style: italic;
+}
+
+.addMovieIcon,
+.imdbImg {
+  display: flex;
+  justify-content: center; /* align horizontal */
+  align-items: center; /* align vertical */
+}
+.addMovieIcon:hover:not([disabled]),
+.imdbImg:hover:not([disabled]) {
+  cursor: pointer;
 }
 @media only screen and (max-width: 600px) {
   .poster-container img {

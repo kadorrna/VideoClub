@@ -17,20 +17,29 @@
         <img src="~/assets/techDiff.jpeg" />
       </div>
       <div v-else>
-        <header>
-          <div class="content col-10">
-            <h1 class="pt-4 pb-2 m-0">
-              <slot name="pageTitle"></slot>
-            </h1>
-            <nav aria-label="breadcrumb" class="py-2">
-              <ol class="breadcrumb p-0 my-0 pb-1 bg-transparent mb-0">
-                <slot name="breadcrumb"> </slot>
-              </ol>
-            </nav>
-          </div>
-        </header>
         <main class="pt-1 pb-3">
-          <div class="content col-12">
+          <header>
+            <div class="col-12">
+              <h1 class="pt-4 pb-2 m-0">
+                <slot name="pageTitle"></slot>
+              </h1>
+              <div class="actionsHeader d-flex">
+                <div class="col-6">
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb p-0 my-0 pb-1 bg-transparent mb-0">
+                      <slot name="breadcrumb"> </slot>
+                    </ol>
+                  </nav>
+                </div>
+                <div class="col-6 text-right">
+                  <slot name="cart" class="col-5 justify-content-end">
+                    <cart />
+                  </slot>
+                </div>
+              </div>
+            </div>
+          </header>
+          <div class="content col-12 mt-3">
             <slot>
               <Nuxt />
             </slot>
@@ -41,8 +50,12 @@
   </div>
 </template>
 <script>
+import Cart from '@/components/cart'
 export default {
   name: 'VideoClubLayout',
+  components: {
+    Cart,
+  },
   computed: {
     fetching() {
       return this.$store.state.fetching
@@ -63,8 +76,13 @@ export default {
 </script>
 
 <style>
+html,
 body {
-  background-color: rgb(230, 220, 220);
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+}
+body {
+  background-color: rgb(240, 240, 240);
 }
 .content {
   margin: 0 auto;

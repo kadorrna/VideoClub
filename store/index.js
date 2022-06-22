@@ -2,6 +2,7 @@ export const state = () => ({
   selectedCategory: {},
   fetching: false,
   errorMessage: '',
+  selectedMovies: [],
 })
 
 export const mutations = {
@@ -13,6 +14,18 @@ export const mutations = {
   },
   setErrorMessage(state, msg) {
     state.errorMessage = msg
+  },
+  removeFromSelectedMovies(state, movieId) {
+    const auxMovieList = state.selectedMovies.filter(
+      (movie) => movie.id !== movieId
+    )
+    state.selectedMovies = auxMovieList
+  },
+  clearSelectedMovies(state) {
+    state.selectedMovies = []
+  },
+  addToSelectedMovies(state, newMovie) {
+    state.selectedMovies.push(newMovie)
   },
 }
 
@@ -31,5 +44,14 @@ export const actions = {
   },
   setErrorMessageAction: ({ commit }, msg) => {
     commit('setErrorMessage', msg)
+  },
+  removeFromSelectedMoviesAction: ({ commit }, movieId) => {
+    commit('removeFromSelectedMovies', movieId)
+  },
+  clearSelectedMoviesAction: ({ commit }) => {
+    commit('clearSelectedMovies')
+  },
+  addToSelectedMoviesAction: ({ commit }, params) => {
+    commit('addToSelectedMovies', params)
   },
 }
