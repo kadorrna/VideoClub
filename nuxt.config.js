@@ -36,6 +36,10 @@ export default {
     '@nuxtjs/axios',
   ],
 
+  bootstrapVue: {
+    icons: true,
+  },
+
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
 
@@ -45,6 +49,6 @@ export default {
   },
 
   server: {
-    port: process.env.PORT || 5000,
+    port: process.env.PORT || 5020,
   },
 }
