@@ -1,8 +1,8 @@
 import { mount, RouterLinkStub } from '@vue/test-utils'
 import { BContainer, BCol, BIcon } from 'bootstrap-vue'
-import ItemPage from '@/pages/item.vue'
+import MoviePage from '~/pages/movie.vue'
 
-describe('ItemPage', () => {
+describe('MoviePage', () => {
   let wrapper
   const mockRoute = {
     query: {
@@ -21,7 +21,7 @@ describe('ItemPage', () => {
   }
 
   beforeEach(() => {
-    wrapper = mount(ItemPage, {
+    wrapper = mount(MoviePage, {
       mocks: {
         $route: mockRoute,
         $store: {

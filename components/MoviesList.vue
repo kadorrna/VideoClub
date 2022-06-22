@@ -18,20 +18,10 @@ export default {
       default: () => [],
     },
   },
-  data() {
-    return {
-      page: 1,
-    }
-  },
-  computed: {
-    url() {
-      return `${this.searchUrl}&page=${this.page}`
-    },
-  },
   methods: {
     goToItem(movieId) {
       return this.$router.push({
-        name: 'item',
+        name: 'movie',
         query: { id: movieId },
       })
     },
@@ -39,10 +29,10 @@ export default {
 }
 </script>
 <style scoped>
-.list-container {
-  height: 90%;
-}
 @media only screen and (max-width: 600px) {
+  .list-container {
+    height: 60vh;
+  }
   .card-container {
     width: 100%;
     height: 80px;

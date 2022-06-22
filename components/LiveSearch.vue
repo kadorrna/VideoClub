@@ -1,10 +1,12 @@
 <template>
   <div class="row justify-content-end">
-    <div class="d-flex col-4 justify-content-end">
+    <div
+      class="d-flex col-lg-4 col-md-6 col-sm-12 col-xs-12 justify-content-end"
+    >
       <form class="searchForm" @submit.prevent="submitSearch">
         <b-form-input
           v-model="searchQuery"
-          class="col-10"
+          class="col-12"
           type="text"
           placeholder="Search a movie..."
           @keyup="submitSearch"
