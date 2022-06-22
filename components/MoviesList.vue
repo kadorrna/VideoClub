@@ -1,13 +1,11 @@
 <template>
-  <div class="col-8 center row list-container">
+  <div class="col-12 list-container p-0">
     <div
       v-for="(movie, index) in movies"
       :key="index"
-      class="col-10 col-sm-6 tile"
+      class="col-12 col-sm-12 my-2 p-0"
     >
-      <nuxt-link :to="`/item?id=${movie.id}`">
-        {{ movie.title }}
-      </nuxt-link>
+      <B-card :title="movie.title" @click="goToItem(movie.id)" />
     </div>
     <infinite-loading spinner="spiral" @infinite="infiniteScroll" />
   </div>
@@ -40,6 +38,12 @@ export default {
       const resp = await this.$axios.$get(this.url)
       this.movies = resp.results
     },
+    goToItem(movieId) {
+      return this.$router.push({
+        name: 'item',
+        query: { id: movieId },
+      })
+    },
     infiniteScroll($state) {
       setTimeout(() => {
         this.page++ // next page
@@ -66,11 +70,18 @@ export default {
 </script>
 <style scoped>
 .list-container {
-  height: 100px;
+  height: 90%;
 }
-.tile {
-  border: dotted gray;
-  padding: 0;
-  margin: 1px;
+@media only screen and (max-width: 600px) {
+  .card-container {
+    width: 100%;
+    height: 80px;
+  }
+  .card-container div {
+    height: 100%;
+  }
+  .card-container .card-body {
+    width: 100%;
+  }
 }
 </style>
