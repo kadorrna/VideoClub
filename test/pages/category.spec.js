@@ -1,5 +1,5 @@
 import { mount, createLocalVue, RouterLinkStub } from '@vue/test-utils'
-import { BContainer } from 'bootstrap-vue'
+import { BContainer, BAlert } from 'bootstrap-vue'
 
 import Vuex from 'vuex'
 
@@ -31,15 +31,21 @@ describe('CategoryPage', () => {
       mocks: {
         $route: mockRoute,
         $store: store,
+        $config: {
+          baseUrl: 'searchUrlForMovies.com',
+        },
       },
       stubs: {
         NuxtLink: RouterLinkStub,
         BContainer,
+        BAlert,
       },
     })
     wrapper.setData({
       categoryName: 'Test',
       genreId: '1',
+      url: 'searchUrlForMovies.com',
+      initialUrl: 'searchUrlForMovies.com',
     })
   })
 
