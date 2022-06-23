@@ -46,7 +46,7 @@ export default {
       this.$store.dispatch('toggleFetchingAction')
     },
     setUIErrorMsg(msg) {
-      this.$store.dispatch('toggleFetchingAction', msg)
+      this.$store.dispatch('setErrorMessageAction', msg)
     },
   },
 }
