@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { BContainer, BCard, BIcon, BModal } from 'bootstrap-vue'
-import IndexPage from '@/pages/index.vue'
+import IndexPage from '~/pages/index.vue'
 
 describe('IndexPage', () => {
   let wrapper

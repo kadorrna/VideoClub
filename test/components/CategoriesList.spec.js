@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { BCard } from 'bootstrap-vue'
-import CategoriesList from '@/components/CategoriesList.vue'
+import CategoriesList from '~/components/CategoriesList.vue'
 
 let wrapper
 const category1 = {

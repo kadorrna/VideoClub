@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { BCard } from 'bootstrap-vue'
-import MoviesList from '@/components/MoviesList.vue'
+import MoviesList from '~/components/MoviesList.vue'
 
 let wrapper
 const movie1 = {

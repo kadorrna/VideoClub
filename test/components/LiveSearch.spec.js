@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import LiveSearch from '@/components/LiveSearch.vue'
+import LiveSearch from '~/components/LiveSearch.vue'
 
 let wrapper
 

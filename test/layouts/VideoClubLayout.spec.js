@@ -1,6 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import { BSpinner, BContainer } from 'bootstrap-vue'
-import VideoClubLayout from '@/layouts/VideoClubLayout'
+import VideoClubLayout from '~/layouts/VideoClubLayout'
 
 describe('VideoClubLayout.vue', () => {
   let wrapper

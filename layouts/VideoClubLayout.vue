@@ -44,7 +44,7 @@
   </div>
 </template>
 <script>
-import Cart from '@/components/Cart'
+import Cart from '~/components/Cart'
 export default {
   name: 'VideoClubLayout',
   components: {

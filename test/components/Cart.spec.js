@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { BIcon, BModal, BButton } from 'bootstrap-vue'
-import Cart from '@/components/Cart.vue'
+import Cart from '~/components/Cart.vue'
 
 let wrapper
 
