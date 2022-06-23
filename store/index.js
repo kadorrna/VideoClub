@@ -1,7 +1,7 @@
 export const state = () => ({
-  selectedCategory: {},
   fetching: false,
   errorMessage: '',
+  selectedCategory: {},
   selectedMovies: [],
 })
 
@@ -13,7 +13,7 @@ export const mutations = {
     state.fetching = !state.fetching
   },
   setErrorMessage(state, msg) {
-    state.errorMessage = msg
+    state.headerMessage = msg
   },
   removeFromSelectedMovies(state, movieId) {
     const auxMovieList = state.selectedMovies.filter(
@@ -42,8 +42,14 @@ export const actions = {
   toggleFetchingAction: ({ commit }) => {
     commit('toggleFetching')
   },
-  setErrorMessageAction: ({ commit }, msg) => {
-    commit('setErrorMessage', msg)
+  // setErrorMessageAction: ({ commit }, msg) => {
+  //   commit('setErrorMessage', msg)
+  // },
+  // setSuccessMessageAction: ({ commit }, msg) => {
+  //   commit('setSuccessMessage', msg)
+  // },
+  setErrorMessageAction: ({ commit }, msgParams) => {
+    commit('setErrorMessage', msgParams)
   },
   removeFromSelectedMoviesAction: ({ commit }, movieId) => {
     commit('removeFromSelectedMovies', movieId)

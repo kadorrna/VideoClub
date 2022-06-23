@@ -4,9 +4,17 @@
       <h1>{{ genreName }}</h1>
     </template>
     <template #breadcrumb>
-      <li class="breadcrumb-item active">
-        <NuxtLink to="/"> home </NuxtLink>
-      </li>
+      <BBreadcrumb>
+        <BBreadcrumbItem to="/">
+          <BIcon
+            icon="house-fill"
+            scale="1.25"
+            shift-v="1.25"
+            aria-hidden="true"
+          ></BIcon>
+          Home
+        </BBreadcrumbItem>
+      </BBreadcrumb>
     </template>
     <template #default>
       <live-search @search-by-title="searchByTitle" />
@@ -59,17 +67,21 @@ export default {
       this.$store.dispatch('toggleFetchingAction')
     },
     setUIErrorMsg(msg) {
-      this.$store.dispatch('setErrorMessageAction', msg)
+      this.$store.dispatch('setHeaderMessageAction', {
+        variant: 'danger',
+        message: msg,
+        isModal: false,
+      })
     },
     async getMovies(url) {
       await this.$axios
         .$get(url)
-        .catch((err) => {
-          this.setUIErrorMsg(err)
-        })
         .then((resp) => {
           this.movies = resp.results
           this.url = url + '&page=1'
+        })
+        .catch((err) => {
+          this.setUIErrorMsg(err)
         })
     },
     infiniteScroll($state) {

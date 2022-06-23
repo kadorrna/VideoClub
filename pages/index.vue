@@ -2,7 +2,7 @@
   <VideoClubLayout>
     <template #pageTitle> Movie Categories </template>
     <template #default>
-      <categories-list :categories="genresData.genres" />
+      <categories-list :categories="genres" />
     </template>
   </VideoClubLayout>
 </template>
@@ -20,29 +20,33 @@ export default {
   layout: 'BaseLayout',
   data() {
     return {
-      genresData: {},
+      genres: [],
     }
   },
   async fetch() {
-    this.toggleUIFetching()
-    this.genresData = await fetch(
-      `${this.$config.baseUrl}/genre/movie/list?api_key=${this.$config.apiSecret}&language=en-US`
-    )
-      .then((res) => {
-        this.toggleUIFetching()
-        return res.json()
-      })
-      .catch((error) => {
-        this.toggleUIFetching()
-        this.setUIErrorMsg('Something went wrong! error:' + error)
-      })
+    await this.getGenres()
   },
   methods: {
+    async getGenres() {
+      this.toggleUIFetching()
+      await this.$axios
+        .$get(
+          `${this.$config.baseUrl}/genre/movie/list?api_key=${this.$config.apiSecret}&language=en-US`
+        )
+        .then((resp) => {
+          this.toggleUIFetching()
+          this.genres = resp.genres
+        })
+        .catch((error) => {
+          this.toggleUIFetching()
+          this.setUIErrorMsg('Something went wrong: ' + error)
+        })
+    },
     toggleUIFetching() {
       this.$store.dispatch('toggleFetchingAction')
     },
     setUIErrorMsg(msg) {
-      this.$store.dispatch('setErrorMessageAction', msg)
+      this.$store.dispatch('toggleFetchingAction', msg)
     },
   },
 }

@@ -2,22 +2,29 @@
   <video-club-layout>
     <template #pageTitle> {{ movie.title }} </template>
     <template #breadcrumb>
-      <li class="breadcrumb-item active">
-        <NuxtLink to="/"> home </NuxtLink>
-        /
-        <NuxtLink
+      <BBreadcrumb>
+        <BBreadcrumbItem to="/">
+          <BIcon
+            icon="house-fill"
+            scale="1.25"
+            shift-v="1.25"
+            aria-hidden="true"
+          ></BIcon>
+          Home
+        </BBreadcrumbItem>
+        <BBreadcrumbItem
           :to="`/category?id=${selectedCategory.id}&categoryName=${selectedCategory.name}`"
         >
-          category
-        </NuxtLink>
-      </li>
+          Category
+        </BBreadcrumbItem>
+      </BBreadcrumb>
     </template>
     <template #default>
-      <div class="itemDetailContainer d-flex row mt-5">
-        <b-col lg="6" xs="12" md="12" sm="12" class="poster-container">
+      <div v-if="movie" class="itemDetailContainer d-flex row mt-5">
+        <BCol lg="6" xs="12" md="12" sm="12" class="poster-container">
           <img :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" />
-        </b-col>
-        <b-col lg="6" xs="12" md="12" sm="12" class="text-left">
+        </BCol>
+        <BCol lg="6" xs="12" md="12" sm="12" class="text-left">
           <div class="col-12">{{ movie.release_date }} <br /></div>
           <div class="col-12">
             {{ movie.vote_average }} from ({{ movie.vote_count }} votes)
@@ -29,9 +36,9 @@
             {{ movie.status }}
             <b-icon :icon="`${getIcon}`" font-scale="1" />
           </div>
-          <b-col class="overview">
+          <BCol class="overview">
             {{ movie.overview }}
-          </b-col>
+          </BCol>
           <div class="col-12 d-flex mt-3">
             <a
               :href="`https://www.imdb.com/title/${movie.imdb_id}`"
@@ -48,7 +55,7 @@
               @click="addToCart(movie.id, movie.title)"
             />
           </div>
-        </b-col>
+        </BCol>
       </div>
     </template>
   </video-club-layout>
@@ -75,18 +82,7 @@ export default {
     }
   },
   async fetch() {
-    this.toggleUIFetching()
-    this.movie = await fetch(
-      `${this.$config.baseUrl}/movie/${this.$route.query.id}?api_key=${this.$config.apiSecret}&&language=en-US`
-    )
-      .then((res) => {
-        this.toggleUIFetching()
-        return res.json()
-      })
-      .catch((error) => {
-        this.toggleUIFetching()
-        this.setUIErrorMsg('Something went wrong! error:' + error)
-      })
+    await this.getMoviedetails()
   },
   computed: {
     selectedCategory() {
@@ -107,16 +103,39 @@ export default {
     },
   },
   methods: {
+    async getMoviedetails() {
+      this.toggleUIFetching()
+      await this.$axios
+        .$get(
+          `${this.$config.baseUrl}/movie/${this.$route.query.id}?api_key=${this.$config.apiSecret}&&language=en-US`
+        )
+        .then((res) => {
+          this.toggleUIFetching()
+          this.movie = res
+        })
+        .catch((error) => {
+          this.toggleUIFetching()
+          this.toastMsg('Something went wrong! error:' + error, 'danger')
+        })
+    },
     toggleUIFetching() {
       this.$store.dispatch('toggleFetchingAction')
     },
-    setUIErrorMsg(msg) {
-      this.$store.dispatch('setErrorMessageAction', msg)
-    },
     addToCart(movieId, movieTitle) {
-      this.$store.dispatch('addToSelectedMoviesAction', {
-        id: movieId,
-        title: movieTitle,
+      if (!this.isSelected) {
+        this.$store.dispatch('addToSelectedMoviesAction', {
+          id: movieId,
+          title: movieTitle,
+        })
+        this.toastMsg(movieTitle + ' added correctly', 'success')
+      }
+    },
+    toastMsg(title, variant) {
+      this.$bvToast.toast('Movie Added', {
+        title,
+        variant,
+        solid: true,
+        toaster: 'b-toaster-bottom-center',
       })
     },
   },

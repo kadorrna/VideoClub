@@ -5,7 +5,7 @@
       :key="index"
       class="col-12 col-sm-12 my-2 p-0"
     >
-      <B-card :title="movie.title" @click="goToItem(movie.id)" />
+      <BCard :title="movie.title" @click="goToItem(movie.id)" />
     </div>
   </div>
 </template>

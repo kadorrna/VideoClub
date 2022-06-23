@@ -1,13 +1,13 @@
 <template>
   <div>
-    <b-icon
+    <BIcon
       v-b-modal.modal-scoped
       icon="cart-fill"
       font-scale="2"
       :class="[areMoviesListed ? '' : 'text-muted']"
       :disabled="!areMoviesListed"
     />
-    <b-modal id="modal-scoped" hide-footer>
+    <BModal id="modal-scoped" hide-footer>
       <div class="cartList">
         <h1>
           {{ values.length > 0 ? 'Movies added' : 'No movies added' }}
@@ -16,14 +16,14 @@
           <div v-for="movie in values" :key="movie.id" class="d-flex my-4">
             <div class="col-10">{{ movie.title }}</div>
             <div class="col-2">
-              <b-icon
-                icon="eraser-fill"
-                @click="removeFromSelected(movie.id)"
+              <BIcon
+                icon="trash-fill"
+                @click="removeFromSelected(movie.id, movie.title)"
               />
             </div>
           </div>
 
-          <b-button
+          <BButton
             size="sm"
             class="addButton"
             :class="[areMoviesListed ? 'btn-danger' : 'btn-light']"
@@ -31,10 +31,10 @@
             @click="clearCart()"
           >
             Clear cart
-          </b-button>
+          </BButton>
         </div>
       </div>
-    </b-modal>
+    </BModal>
   </div>
 </template>
 
@@ -50,11 +50,21 @@ export default {
     },
   },
   methods: {
-    removeFromSelected(movieId) {
+    removeFromSelected(movieId, movieTitle) {
       this.$store.dispatch('removeFromSelectedMoviesAction', movieId)
+      this.toastMsg(movieTitle + ' has been removed from selected')
     },
     clearCart() {
       this.$store.dispatch('clearSelectedMoviesAction')
+      this.toastMsg('Selected movies cleared')
+    },
+    toastMsg(title) {
+      this.$bvToast.toast('Movies cleared', {
+        title,
+        variant: 'success',
+        solid: true,
+        toaster: 'b-toaster-bottom-center',
+      })
     },
   },
 }
