@@ -3,17 +3,11 @@
     <BContainer v-if="fetching" style="width: 3rem" class="text-center content">
       <BSpinner label="Spinning"></BSpinner>
     </BContainer>
-    <b-container v-else class="text-center content">
+    <BContainer class="text-center content">
       <div v-if="showError">
-        <b-alert
-          variant="danger"
-          dismissible
-          fade
-          :show="showError"
-          @dismissed="clearErrorMsg()"
-        >
-          {{ errorMsg }}
-        </b-alert>
+        <div class="danger">
+          <h1 class="text-danger">{{ errorMessage }}</h1>
+        </div>
         <img src="~/assets/techDiff.jpeg" />
       </div>
       <div v-else>
@@ -33,7 +27,7 @@
                 </div>
                 <div class="col-6 text-right">
                   <slot name="cart" class="col-5 justify-content-end">
-                    <cart />
+                    <CartComponent />
                   </slot>
                 </div>
               </div>
@@ -46,15 +40,20 @@
           </div>
         </main>
       </div>
-    </b-container>
+    </BContainer>
   </div>
 </template>
 <script>
-import Cart from '@/components/cart'
+import CartComponent from '~/components/CartComponent.vue'
 export default {
   name: 'VideoClubLayout',
   components: {
-    Cart,
+    CartComponent,
+  },
+  data() {
+    return {
+      dismissCountDown: 5,
+    }
   },
   computed: {
     fetching() {
@@ -63,13 +62,8 @@ export default {
     showError() {
       return this.$store.state.errorMessage !== ''
     },
-    errorMsg() {
+    errorMessage() {
       return this.$store.state.errorMessage
-    },
-  },
-  methods: {
-    clearErrorMsg() {
-      this.$store.dispatch('setErrorMessageAction', '')
     },
   },
 }

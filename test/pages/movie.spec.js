@@ -1,5 +1,12 @@
 import { mount, RouterLinkStub } from '@vue/test-utils'
-import { BContainer, BCol, BIcon } from 'bootstrap-vue'
+import {
+  BContainer,
+  BCol,
+  BIcon,
+  BModal,
+  BBreadcrumb,
+  BBreadcrumbItem,
+} from 'bootstrap-vue'
 import MoviePage from '~/pages/movie.vue'
 
 describe('MoviePage', () => {
@@ -28,10 +35,8 @@ describe('MoviePage', () => {
           state: {
             fetching: false,
             errorMessage: '',
-            selectedCategory: {
-              id: '1',
-              name: 'testing category',
-            },
+            selectedCategory: {},
+            selectedMovies: [],
           },
         },
       },
@@ -40,6 +45,9 @@ describe('MoviePage', () => {
         BContainer,
         BCol,
         BIcon,
+        BModal,
+        BBreadcrumb,
+        BBreadcrumbItem,
       },
     })
     wrapper.setData({ movie })

@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
-import { BContainer, BCard } from 'bootstrap-vue'
-import IndexPage from '@/pages/index.vue'
+import { BContainer, BCard, BIcon, BModal } from 'bootstrap-vue'
+import IndexPage from '~/pages/index.vue'
 
 describe('IndexPage', () => {
   let wrapper
@@ -12,21 +12,23 @@ describe('IndexPage', () => {
           state: {
             fetching: false,
             errorMessage: '',
+            selectedCategory: {},
+            selectedMovies: [],
           },
         },
       },
       stubs: {
         BContainer,
         BCard,
+        BIcon,
+        BModal,
       },
     })
     wrapper.setData({
-      genresData: {
-        genres: [
-          { name: 'cat 1', id: 1 },
-          { name: 'cat 2', id: 2 },
-        ],
-      },
+      genres: [
+        { name: 'cat 1', id: 1 },
+        { name: 'cat 2', id: 2 },
+      ],
     })
   })
 

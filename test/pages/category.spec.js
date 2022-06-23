@@ -3,7 +3,7 @@ import { BContainer, BAlert } from 'bootstrap-vue'
 
 import Vuex from 'vuex'
 
-import CategoryPage from '@/pages/category.vue'
+import CategoryPage from '~/pages/category.vue'
 
 const localVue = createLocalVue()
 localVue.use(Vuex)

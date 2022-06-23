@@ -1,7 +1,7 @@
 export const state = () => ({
-  selectedCategory: {},
   fetching: false,
   errorMessage: '',
+  selectedCategory: {},
   selectedMovies: [],
 })
 
@@ -42,16 +42,16 @@ export const actions = {
   toggleFetchingAction: ({ commit }) => {
     commit('toggleFetching')
   },
-  setErrorMessageAction: ({ commit }, msg) => {
-    commit('setErrorMessage', msg)
-  },
-  removeFromSelectedMoviesAction: ({ commit }, movieId) => {
-    commit('removeFromSelectedMovies', movieId)
+  setErrorMessageAction: ({ commit }, msgParams) => {
+    commit('setErrorMessage', msgParams)
   },
   clearSelectedMoviesAction: ({ commit }) => {
     commit('clearSelectedMovies')
   },
   addToSelectedMoviesAction: ({ commit }, params) => {
     commit('addToSelectedMovies', params)
+  },
+  removeFromSelectedMoviesAction: ({ commit }, movieId) => {
+    commit('removeFromSelectedMovies', movieId)
   },
 }
