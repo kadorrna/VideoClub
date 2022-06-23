@@ -1,13 +1,13 @@
 import { mount } from '@vue/test-utils'
 import { BIcon, BModal, BButton } from 'bootstrap-vue'
-import Cart from '~/components/Cart.vue'
+import CartComponent from '~/components/CartComponent.vue'
 
 let wrapper
 
 describe('Cart.vue', () => {
   describe('when component is mounted with movies', () => {
     beforeEach(function () {
-      wrapper = mount(Cart, {
+      wrapper = mount(CartComponent, {
         attachTo: document.body,
         mocks: {
           $store: {

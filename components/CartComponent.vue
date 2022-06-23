@@ -40,7 +40,7 @@
 
 <script>
 export default {
-  name: 'CartPage',
+  name: 'CartComponent',
   computed: {
     values() {
       return this.$store.state.selectedMovies

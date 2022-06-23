@@ -27,7 +27,7 @@
                 </div>
                 <div class="col-6 text-right">
                   <slot name="cart" class="col-5 justify-content-end">
-                    <cart />
+                    <CartComponent />
                   </slot>
                 </div>
               </div>
@@ -44,11 +44,11 @@
   </div>
 </template>
 <script>
-import Cart from '~/components/Cart'
+import CartComponent from '~/components/CartComponent.vue'
 export default {
   name: 'VideoClubLayout',
   components: {
-    Cart,
+    CartComponent,
   },
   data() {
     return {
