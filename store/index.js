@@ -1,57 +1,16 @@
-export const state = () => ({
-  fetching: false,
-  errorMessage: '',
-  selectedCategory: {},
-  selectedMovies: [],
-})
+// import Vue from 'vue'
+import Vuex from 'vuex'
+import { state } from './state'
+import * as actions from './actions'
+import * as mutations from './mutations'
+import * as getters from './getters'
 
-export const mutations = {
-  setSelectedCategory(state, category) {
-    state.selectedCategory = category
-  },
-  toggleFetching(state) {
-    state.fetching = !state.fetching
-  },
-  setErrorMessage(state, msg) {
-    state.errorMessage = msg
-  },
-  removeFromSelectedMovies(state, movieId) {
-    const auxMovieList = state.selectedMovies.filter(
-      (movie) => movie.id !== movieId
-    )
-    state.selectedMovies = auxMovieList
-  },
-  clearSelectedMovies(state) {
-    state.selectedMovies = []
-  },
-  addToSelectedMovies(state, newMovie) {
-    state.selectedMovies.push(newMovie)
-  },
-}
+// Vue.use(Vuex)
 
-export const getters = {
-  getSelectedCategory: (state) => state.selectedCategory,
-  isFetching: (state) => state.fetching,
-  getErrorMessage: (state) => state.errorMessage,
-}
-
-export const actions = {
-  setSelectedCategoryAction: ({ commit }, category) => {
-    commit('setSelectedCategory', category)
-  },
-  toggleFetchingAction: ({ commit }) => {
-    commit('toggleFetching')
-  },
-  setErrorMessageAction: ({ commit }, msgParams) => {
-    commit('setErrorMessage', msgParams)
-  },
-  clearSelectedMoviesAction: ({ commit }) => {
-    commit('clearSelectedMovies')
-  },
-  addToSelectedMoviesAction: ({ commit }, params) => {
-    commit('addToSelectedMovies', params)
-  },
-  removeFromSelectedMoviesAction: ({ commit }, movieId) => {
-    commit('removeFromSelectedMovies', movieId)
-  },
-}
+export default () =>
+  new Vuex.Store({
+    state,
+    mutations,
+    actions,
+    getters,
+  })

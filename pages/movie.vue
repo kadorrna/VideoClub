@@ -46,7 +46,7 @@
             >
               <img src="~/assets/imdb-icon.png" style="width: 32px" />
             </a>
-            <b-icon
+            <BIcon
               icon="plus-circle-fill"
               font-scale="2"
               class="addMovieIcon ml-2"
@@ -62,6 +62,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 import VideoClubLayout from '~/layouts/VideoClubLayout.vue'
 
 const icon = {
@@ -76,15 +77,8 @@ const icon = {
 export default {
   name: 'MoviePage',
   components: { VideoClubLayout },
-  data() {
-    return {
-      movie: {},
-    }
-  },
-  async fetch() {
-    await this.getMoviedetails()
-  },
   computed: {
+    ...mapGetters(['movie']),
     selectedCategory() {
       return this.$store.state.selectedCategory
     },
@@ -102,21 +96,14 @@ export default {
       return ''
     },
   },
+  async beforeMount() {
+    await this.getMoviedetails()
+  },
   methods: {
+    ...mapActions(['getMovieDetailsAction', 'resetMoviesAction']),
     async getMoviedetails() {
       this.toggleUIFetching()
-      await this.$axios
-        .$get(
-          `${this.$config.baseUrl}/movie/${this.$route.query.id}?api_key=${this.$config.apiSecret}&&language=en-US`
-        )
-        .then((res) => {
-          this.toggleUIFetching()
-          this.movie = res
-        })
-        .catch((error) => {
-          this.toggleUIFetching()
-          this.toastMsg('Something went wrong! error:' + error, 'danger')
-        })
+      await this.getMovieDetailsAction(this.$route.query.id)
     },
     toggleUIFetching() {
       this.$store.dispatch('toggleFetchingAction')
