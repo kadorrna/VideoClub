@@ -2,12 +2,13 @@
   <VideoClubLayout>
     <template #pageTitle> Movie Categories </template>
     <template #default>
-      <categories-list :categories="genres" />
+      <categories-list :categories="categories" />
     </template>
   </VideoClubLayout>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 import CategoriesList from '~/components/CategoriesList.vue'
 import VideoClubLayout from '~/layouts/VideoClubLayout.vue'
 
@@ -18,36 +19,14 @@ export default {
     VideoClubLayout,
   },
   layout: 'BaseLayout',
-  data() {
-    return {
-      genres: [],
-    }
-  },
   async fetch() {
-    await this.getGenres()
+    await this.getCategoriesAction()
+  },
+  computed: {
+    ...mapGetters(['categories']),
   },
   methods: {
-    async getGenres() {
-      this.toggleUIFetching()
-      await this.$axios
-        .$get(
-          `${this.$config.baseUrl}/genre/movie/list?api_key=${this.$config.apiSecret}&language=en-US`
-        )
-        .then((resp) => {
-          this.toggleUIFetching()
-          this.genres = resp.genres
-        })
-        .catch((error) => {
-          this.toggleUIFetching()
-          this.setUIErrorMsg('Something went wrong: ' + error)
-        })
-    },
-    toggleUIFetching() {
-      this.$store.dispatch('toggleFetchingAction')
-    },
-    setUIErrorMsg(msg) {
-      this.$store.dispatch('setErrorMessageAction', msg)
-    },
+    ...mapActions(['getCategoriesAction']),
   },
 }
 </script>

@@ -16,7 +16,7 @@ https://trello.com/b/tLWgNJ74/videoclub
 # install dependencies
 $ yarn install
 
-# serve with hot reload at localhost:3000
+# serve with hot reload at localhost:5020 or set it in .env
 $ yarn dev
 
 # build for production and launch server
