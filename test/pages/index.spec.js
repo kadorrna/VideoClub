@@ -1,35 +1,38 @@
-import { mount } from '@vue/test-utils'
+import { mount, createLocalVue } from '@vue/test-utils'
+import Vuex from 'vuex'
 import { BContainer, BCard, BIcon, BModal } from 'bootstrap-vue'
 import IndexPage from '~/pages/index.vue'
 
+const state = {
+  fetching: false,
+  errorMessage: '',
+  selectedCategory: {},
+  selectedMovies: [],
+}
+
+const stubs = {
+  BContainer,
+  BCard,
+  BIcon,
+  BModal,
+}
+
+const getters = {
+  categories: () => [
+    { name: 'cat 1', id: 1 },
+    { name: 'cat 2', id: 2 },
+  ],
+}
+
 describe('IndexPage', () => {
-  let wrapper
-  beforeEach(() => {
-    wrapper = mount(IndexPage, {
-      mocks: {
-        $fetchState: { pending: false, error: false },
-        $store: {
-          state: {
-            fetching: false,
-            errorMessage: '',
-            selectedCategory: {},
-            selectedMovies: [],
-          },
-        },
-      },
-      stubs: {
-        BContainer,
-        BCard,
-        BIcon,
-        BModal,
-      },
-    })
-    wrapper.setData({
-      genres: [
-        { name: 'cat 1', id: 1 },
-        { name: 'cat 2', id: 2 },
-      ],
-    })
+  const localVue = createLocalVue()
+  localVue.use(Vuex)
+  const store = new Vuex.Store({ getters, state })
+
+  const wrapper = mount(IndexPage, {
+    localVue,
+    store,
+    stubs,
   })
 
   test('is a Vue instance and displays basic info', () => {
