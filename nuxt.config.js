@@ -44,8 +44,16 @@ export default {
   build: {},
 
   publicRuntimeConfig: {
-    baseUrl: process.env.BASE_URL || 'hello world!',
-    apiSecret: process.env.API_SECRET || '',
+    baseURL: process.env.BASE_API_URL,
+  },
+
+  privateRuntimeConfig: {
+    apiSecret: process.env.API_SECRET,
+  },
+
+  env: {
+    API_URL: process.env.BASE_API_URL,
+    API_SECRET: process.env.API_SECRET,
   },
 
   server: {
