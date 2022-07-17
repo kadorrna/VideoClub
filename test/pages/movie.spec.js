@@ -21,19 +21,21 @@ const movie = {
 }
 
 const actions = {
-  toggleFetchingAction: jest.fn(),
   getMovieDetailsAction: jest.fn(),
 }
 
 const getters = {
   movie: () => movie,
+  isFetching: () => false,
+  selectedCategory: () => ({
+    id: 1,
+    name: 'category',
+  }),
 }
 const state = {
   fetching: false,
   errorMessage: '',
-  selectedCategory: {},
   selectedMovies: [],
-  movie,
 }
 const mockRoute = {
   query: {
@@ -63,6 +65,9 @@ describe('MoviePage', () => {
       store,
       mocks: {
         $route: mockRoute,
+        $nuxt: {
+          error: jest.fn(),
+        },
       },
       stubs,
     })
@@ -73,27 +78,6 @@ describe('MoviePage', () => {
       expect(div.text()).toContain('Testing Movie')
       const overview = wrapper.find('.overview')
       expect(overview.text()).toBe('This is a test overview')
-    })
-  })
-
-  describe('When is an error', () => {
-    const state = {
-      fetching: false,
-      errorMessage: 'Error Message',
-    }
-    const store = new Vuex.Store({ getters, actions, state })
-    const wrapper = mount(MoviePage, {
-      localVue,
-      store,
-      mocks: {
-        $route: mockRoute,
-      },
-      stubs,
-    })
-    test('Displays error message', () => {
-      const div = wrapper.find('h1.text-danger')
-      expect(wrapper.vm).toBeTruthy()
-      expect(div.text()).toContain('Error Message')
     })
   })
 })

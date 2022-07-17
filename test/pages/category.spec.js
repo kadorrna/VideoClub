@@ -1,5 +1,5 @@
 import { mount, createLocalVue, RouterLinkStub } from '@vue/test-utils'
-import { BContainer, BAlert } from 'bootstrap-vue'
+import { BContainer, BAlert, BCard } from 'bootstrap-vue'
 
 import Vuex from 'vuex'
 
@@ -9,9 +9,10 @@ const localVue = createLocalVue()
 localVue.use(Vuex)
 
 describe('CategoryPage', () => {
-  let wrapper
   const actions = {
     setSelectedCategoryAction: jest.fn(),
+    resetMoviesAction: jest.fn(),
+    getMoviesAction: jest.fn(),
   }
   const mockRoute = {
     query: {
@@ -19,39 +20,53 @@ describe('CategoryPage', () => {
       categoryName: 'Test',
     },
   }
+
+  const localVue = createLocalVue()
+  localVue.use(Vuex)
   const store = new Vuex.Store({
     actions,
     state: {
-      fetching: false,
-      errorMessage: 'Error',
+      selectedCategory: {},
+      selectedMovies: [],
+    },
+    getters: {
+      isFetching: () => false,
+      errorMessage: () => '',
+      movies: () => (
+        {
+          title: 'Movie 1',
+          id: '1',
+        },
+        {
+          title: 'Movie 2',
+          id: '2',
+        }
+      ),
     },
   })
-  beforeEach(() => {
-    wrapper = mount(CategoryPage, {
-      mocks: {
-        $route: mockRoute,
-        $store: store,
-        $config: {
-          baseUrl: 'searchUrlForMovies.com',
-        },
+
+  const wrapper = mount(CategoryPage, {
+    localVue,
+    store,
+    mocks: {
+      $route: mockRoute,
+      $store: store,
+      $config: {
+        baseUrl: 'searchUrlForMovies.com',
       },
-      stubs: {
-        NuxtLink: RouterLinkStub,
-        BContainer,
-        BAlert,
+      $nuxt: {
+        error: jest.fn(),
       },
-    })
-    wrapper.setData({
-      categoryName: 'Test',
-      genreId: '1',
-      url: 'searchUrlForMovies.com',
-      initialUrl: 'searchUrlForMovies.com',
-    })
+    },
+    stubs: {
+      NuxtLink: RouterLinkStub,
+      BContainer,
+      BAlert,
+      BCard,
+    },
   })
 
-  test('is a Vue instance and displays error', () => {
-    const img = wrapper.findAll('img')
-    expect(wrapper.vm).toBeTruthy()
-    expect(img.length).toBe(1)
+  test('it has 2 elements in the list', () => {
+    expect(wrapper.findAllComponents(BCard).length).toBe(2)
   })
 })

@@ -6,11 +6,13 @@ import * as mutations from './mutations'
 import * as getters from './getters'
 
 // Vue.use(Vuex)
-
-export default () =>
-  new Vuex.Store({
+const createStore = () => {
+  return new Vuex.Store({
     state,
     mutations,
     actions,
     getters,
   })
+}
+
+export default createStore

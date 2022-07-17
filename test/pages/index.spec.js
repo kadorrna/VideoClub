@@ -22,6 +22,7 @@ const getters = {
     { name: 'cat 1', id: 1 },
     { name: 'cat 2', id: 2 },
   ],
+  isFetching: () => false,
 }
 
 describe('IndexPage', () => {
@@ -33,6 +34,11 @@ describe('IndexPage', () => {
     localVue,
     store,
     stubs,
+    mocks: {
+      $nuxt: {
+        error: jest.fn(),
+      },
+    },
   })
 
   test('is a Vue instance and displays basic info', () => {

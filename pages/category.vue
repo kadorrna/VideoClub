@@ -52,9 +52,10 @@ export default {
       'getMoviesAction',
       'searchByTitleAction',
       'resetMoviesAction',
+      'setSelectedCategoryAction',
     ]),
     setStateSelectedCategory(category) {
-      this.$store.dispatch('setSelectedCategoryAction', category)
+      this.setSelectedCategoryAction(category)
     },
     searchByTitle(payload) {
       if (payload.searchQuery !== '') {
@@ -63,9 +64,6 @@ export default {
         this.resetMoviesAction()
         this.getMoviesAction()
       }
-    },
-    toggleUIFetching() {
-      this.$store.dispatch('toggleFetchingAction')
     },
     infiniteScroll($state) {
       setTimeout(() => {

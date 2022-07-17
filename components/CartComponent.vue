@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   name: 'CartComponent',
   computed: {
@@ -50,12 +51,16 @@ export default {
     },
   },
   methods: {
+    ...mapActions([
+      'clearSelectedMoviesAction',
+      'removeFromSelectedMoviesAction',
+    ]),
     removeFromSelected(movieId, movieTitle) {
-      this.$store.dispatch('removeFromSelectedMoviesAction', movieId)
+      this.removeFromSelectedMoviesAction(movieId)
       this.toastMsg(movieTitle + ' has been removed from selected')
     },
     clearCart() {
-      this.$store.dispatch('clearSelectedMoviesAction')
+      this.clearSelectedMoviesAction()
       this.toastMsg('Selected movies cleared')
     },
     toastMsg(title) {

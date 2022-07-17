@@ -1,59 +1,45 @@
-import { shallowMount } from '@vue/test-utils'
+import { mount, createLocalVue } from '@vue/test-utils'
+import Vuex from 'vuex'
 import { BSpinner, BContainer } from 'bootstrap-vue'
 import VideoClubLayout from '~/layouts/VideoClubLayout'
 
-describe('VideoClubLayout.vue', () => {
-  let wrapper
-  describe('error has been set', () => {
-    beforeEach(() => {
-      wrapper = shallowMount(VideoClubLayout, {
-        mocks: {
-          $store: {
-            state: {
-              fetching: false,
-              errorMessage: 'ERROR TEST',
-              selectedCategory: {},
-              selectedMovies: [],
-            },
-          },
-        },
-        stubs: {
-          BSpinner,
-          BContainer,
-        },
-      })
-    })
+const stubs = {
+  BSpinner,
+  BContainer,
+}
 
-    it('should render error page', () => {
-      expect(wrapper.findAllComponents(BSpinner).length).toBe(0)
-      expect(wrapper.findAll('img').length).toBe(1)
-      expect(wrapper.findAll('.danger').length).toBe(1)
-      expect(wrapper.find('h1').text()).toBe('ERROR TEST')
-    })
-  })
+const mocks = {
+  $nuxt: {
+    error: jest.fn(),
+  },
+}
+
+const state = {
+  selectedCategory: {},
+  selectedMovies: [],
+  fetching: false,
+  errorMessage: '',
+}
+
+describe('VideoClubLayout.vue', () => {
+  const localVue = createLocalVue()
+  localVue.use(Vuex)
 
   describe('no error set', () => {
-    beforeEach(() => {
-      wrapper = shallowMount(VideoClubLayout, {
-        mocks: {
-          $store: {
-            state: {
-              fetching: false,
-              errorMessage: '',
-              selectedCategory: {},
-              selectedMovies: [],
-            },
-          },
-        },
-        stubs: {
-          BSpinner,
-          BContainer,
-        },
-      })
+    const getters = {
+      isFetching: () => false,
+      errorMessage: () => '',
+    }
+    const store = new Vuex.Store({ state, getters })
+    const wrapper = mount(VideoClubLayout, {
+      localVue,
+      store,
+      mocks,
+      stubs,
     })
 
     it('should not show error messages', () => {
-      expect(wrapper.findAllComponents(BSpinner).length).toBe(0)
+      expect(wrapper.findAll('.spinner-border').length).toBe(0)
       expect(wrapper.findAll('img').length).toBe(0)
       expect(wrapper.findAll('.danger').length).toBe(0)
       expect(wrapper.findAll('main').length).toBe(1)
@@ -61,26 +47,19 @@ describe('VideoClubLayout.vue', () => {
   })
 
   describe('is fetching data', () => {
-    beforeEach(() => {
-      wrapper = shallowMount(VideoClubLayout, {
-        mocks: {
-          $store: {
-            state: {
-              fetching: true,
-              errorMessage: '',
-              selectedCategory: {},
-              selectedMovies: [],
-            },
-          },
-        },
-        stubs: {
-          BSpinner,
-          BContainer,
-        },
-      })
+    const getters = {
+      isFetching: () => true,
+      errorMessage: () => '',
+    }
+    const store = new Vuex.Store({ state, getters })
+    const wrapper = mount(VideoClubLayout, {
+      localVue,
+      store,
+      mocks,
+      stubs,
     })
     it('should show a spinner', () => {
-      expect(wrapper.findComponent(BSpinner).isVisible()).toBe(true)
+      expect(wrapper.findAll('.spinner-border').length).toBe(1)
       expect(wrapper.findAll('img').length).toBe(0)
       expect(wrapper.findAll('.danger').length).toBe(0)
       expect(wrapper.findAll('main').length).toBe(1)

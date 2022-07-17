@@ -7,12 +7,6 @@ import {
 export const setSelectedCategoryAction = ({ commit }, category) => {
   commit('setSelectedCategory', category)
 }
-export const toggleFetchingAction = ({ commit }) => {
-  commit('toggleFetching')
-}
-export const setErrorMessageAction = ({ commit }, msgParams) => {
-  commit('setErrorMessage', msgParams)
-}
 export const clearSelectedMoviesAction = ({ commit }) => {
   commit('clearSelectedMovies')
 }
@@ -76,6 +70,7 @@ export const getMovieDetailsAction = async ({ commit }, query) => {
   commit('toggleFetching')
   await getMovieDetailsService(url)
     .then((movie) => {
+      commit('toggleFetching')
       commit('setMovie', movie)
     })
     .catch((err) => {
