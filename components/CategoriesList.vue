@@ -1,9 +1,9 @@
 <template>
-  <div class="text-center row">
+  <div class="text-center row d-flex flex-end justify-content-center">
     <div
       v-for="(category, index) in categories"
       :key="index"
-      class="card-container col-lg-3 col-md-6 col-sm-12 col-xs-12 my-1 d-flex align-items-stretch"
+      class="card-container col-lg-3 col-md-6 col-sm-12 col-xs-12"
     >
       <BCard
         overlay

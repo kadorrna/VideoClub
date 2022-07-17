@@ -6,15 +6,16 @@
       font-scale="2"
       :class="[areMoviesListed ? '' : 'text-muted']"
       :disabled="!areMoviesListed"
+      data-icon-modal-button
     />
-    <BModal id="modal-scoped" hide-footer>
+    <BModal id="modal-scoped" hide-footer :static="true">
       <div class="cartList">
         <h1>
           {{ values.length > 0 ? 'Movies added' : 'No movies added' }}
         </h1>
         <div v-if="values.length > 0">
           <div v-for="movie in values" :key="movie.id" class="d-flex my-4">
-            <div class="col-10">{{ movie.title }}</div>
+            <div class="col-10" data-movie-title>{{ movie.title }}</div>
             <div class="col-2">
               <BIcon
                 icon="trash-fill"
@@ -39,12 +40,13 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'CartComponent',
   computed: {
+    ...mapGetters(['selectedMovies']),
     values() {
-      return this.$store.state.selectedMovies
+      return this.selectedMovies
     },
     areMoviesListed() {
       return this.values.length > 0
