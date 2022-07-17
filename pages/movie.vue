@@ -78,10 +78,7 @@ export default {
   name: 'MoviePage',
   components: { VideoClubLayout },
   computed: {
-    ...mapGetters(['movie']),
-    selectedCategory() {
-      return this.$store.state.selectedCategory
-    },
+    ...mapGetters(['movie', 'selectedCategory']),
     getIcon() {
       if (this && this.movie && this.movie.status)
         return icon[this.movie.status.trim()]
@@ -100,17 +97,17 @@ export default {
     await this.getMoviedetails()
   },
   methods: {
-    ...mapActions(['getMovieDetailsAction', 'resetMoviesAction']),
+    ...mapActions([
+      'getMovieDetailsAction',
+      'resetMoviesAction',
+      'addToSelectedMoviesAction',
+    ]),
     async getMoviedetails() {
-      this.toggleUIFetching()
       await this.getMovieDetailsAction(this.$route.query.id)
-    },
-    toggleUIFetching() {
-      this.$store.dispatch('toggleFetchingAction')
     },
     addToCart(movieId, movieTitle) {
       if (!this.isSelected) {
-        this.$store.dispatch('addToSelectedMoviesAction', {
+        this.addToSelectedMoviesAction({
           id: movieId,
           title: movieTitle,
         })
