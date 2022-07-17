@@ -32,7 +32,7 @@ describe('CategoryPage', () => {
     getters: {
       isFetching: () => false,
       errorMessage: () => '',
-      movies: () => (
+      movies: () => [
         {
           title: 'Movie 1',
           id: '1',
@@ -40,8 +40,8 @@ describe('CategoryPage', () => {
         {
           title: 'Movie 2',
           id: '2',
-        }
-      ),
+        },
+      ],
     },
   })
 
