@@ -23,6 +23,7 @@ const getters = {
     { name: 'cat 2', id: 2 },
   ],
   isFetching: () => false,
+  selectedMovies: () => [],
 }
 
 describe('IndexPage', () => {

@@ -29,6 +29,7 @@ describe('VideoClubLayout.vue', () => {
     const getters = {
       isFetching: () => false,
       errorMessage: () => '',
+      selectedMovies: () => [],
     }
     const store = new Vuex.Store({ state, getters })
     const wrapper = mount(VideoClubLayout, {
@@ -50,6 +51,7 @@ describe('VideoClubLayout.vue', () => {
     const getters = {
       isFetching: () => true,
       errorMessage: () => '',
+      selectedMovies: () => [],
     }
     const store = new Vuex.Store({ state, getters })
     const wrapper = mount(VideoClubLayout, {

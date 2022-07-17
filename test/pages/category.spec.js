@@ -42,6 +42,7 @@ describe('CategoryPage', () => {
           id: '2',
         },
       ],
+      selectedMovies: () => [],
     },
   })
 

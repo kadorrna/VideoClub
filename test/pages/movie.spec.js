@@ -31,6 +31,7 @@ const getters = {
     id: 1,
     name: 'category',
   }),
+  selectedMovies: () => [],
 }
 const state = {
   fetching: false,
