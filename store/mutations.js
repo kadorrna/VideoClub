@@ -44,3 +44,6 @@ export const updateSearchQuery = (state, txt) => {
 export const setMovie = (state, movie) => {
   state.movie = movie
 }
+export const clearMovie = (state) => {
+  state.movie = {}
+}

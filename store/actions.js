@@ -78,3 +78,7 @@ export const getMovieDetailsAction = async ({ commit }, query) => {
       commit('setErrorMessage', 'Something went wrong: ' + err)
     })
 }
+
+export const clearMovieDetailsAction = ({ commit }) => {
+  commit('clearMovie')
+}

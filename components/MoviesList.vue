@@ -1,5 +1,5 @@
 <template>
-  <div class="col-12 list-container p-0">
+  <div class="col-12 p-0">
     <div
       v-for="(movie, index) in movies"
       :key="index"
@@ -30,9 +30,6 @@ export default {
 </script>
 <style scoped>
 @media only screen and (max-width: 600px) {
-  .list-container {
-    height: 60vh;
-  }
   .card-container {
     width: 100%;
     height: 80px;
