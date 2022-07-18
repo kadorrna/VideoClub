@@ -20,7 +20,10 @@
       </BBreadcrumb>
     </template>
     <template #default>
-      <div v-if="movie" class="itemDetailContainer d-flex row mt-5">
+      <div
+        v-if="movie && movie.poster_path"
+        class="itemDetailContainer d-flex row mt-5"
+      >
         <BCol lg="6" xs="12" md="12" sm="12" class="poster-container">
           <img :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" />
         </BCol>
@@ -96,11 +99,14 @@ export default {
   async beforeMount() {
     await this.getMoviedetails()
   },
+  beforeDestroy() {
+    this.clearMovieDetailsAction()
+  },
   methods: {
     ...mapActions([
       'getMovieDetailsAction',
-      'resetMoviesAction',
       'addToSelectedMoviesAction',
+      'clearMovieDetailsAction',
     ]),
     async getMoviedetails() {
       await this.getMovieDetailsAction(this.$route.query.id)

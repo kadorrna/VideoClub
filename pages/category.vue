@@ -17,9 +17,15 @@
       </BBreadcrumb>
     </template>
     <template #default>
-      <live-search @search-by-title="searchByTitle" />
-      <movies-list :movies="movies" />
-      <infinite-loading spinner="spiral" @infinite="infiniteScroll" />
+      <div class="list-container">
+        <live-search @search-by-title="searchByTitle" />
+        <movies-list :movies="movies" />
+        <infinite-loading
+          spinner="spiral"
+          force-use-infinite-wrapper
+          @infinite="infiniteScroll"
+        />
+      </div>
     </template>
   </video-club-layout>
 </template>
@@ -78,3 +84,10 @@ export default {
   },
 }
 </script>
+<style scoped>
+@media only screen and (max-width: 600px) {
+  .list-container {
+    max-height: 60vh;
+  }
+}
+</style>
