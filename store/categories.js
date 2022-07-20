@@ -1,11 +1,8 @@
-// import VuexPersistence from 'vuex-persist'
-// import createPersistedState from 'vuex-persistedstate'
 import { getCategoriesService } from '@/services'
 
 export const state = () => ({
   list: [],
   selectedCategory: {},
-  persistedState: null,
 })
 
 export const getters = {

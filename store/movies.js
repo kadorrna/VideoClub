@@ -7,7 +7,6 @@ export const state = () => ({
     searchQuery: '',
   },
   movie: {},
-  persistedState: null,
 })
 export const getters = {
   movies(state) {
