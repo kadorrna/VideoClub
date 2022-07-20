@@ -19,13 +19,5 @@ export default {
       return this.movie.title
     },
   },
-  // watch: {
-  //   selectedCategory(newVal) {
-  //     this.title = newVal.name === undefined ? 'Movie' : newVal.name
-  //   },
-  //   movie(newVal) {
-  //     this.title = newVal.title
-  //   },
-  // },
 }
 </script>

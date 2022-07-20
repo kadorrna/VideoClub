@@ -1,8 +1,5 @@
 <template>
-  <b-breadcrumb
-    v-if="selectedCategory.id"
-    :items="getCrumbsItems"
-  ></b-breadcrumb>
+  <b-breadcrumb :items="getCrumbsItems"></b-breadcrumb>
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'
@@ -13,24 +10,27 @@ export default {
       selectedCategory: 'categories/selectedCategory',
     }),
     getCrumbsItems() {
-      this.setSelectedCategoryIfNeeded(localStorage)
-      if (this.$nuxt.$route.name === 'index') {
-        return [{ text: 'Home', active: true }]
-      }
-      if (this.$nuxt.$route.name === 'category') {
+      if (process.client) {
+        this.setSelectedCategoryIfNeeded(localStorage)
+        if (this.$nuxt.$route.name === 'index') {
+          return [{ text: 'Home', active: true }]
+        }
+        if (this.$nuxt.$route.name === 'category') {
+          return [
+            { text: 'Home', to: '/' },
+            { text: 'Category', active: true },
+          ]
+        }
         return [
           { text: 'Home', to: '/' },
-          { text: 'Category', active: true },
+          {
+            text: 'Category',
+            to: `/category?id=${this.selectedCategory.id}&categoryName=${this.selectedCategory.name}`,
+          },
+          { text: 'Movie', active: true },
         ]
       }
-      return [
-        { text: 'Home', to: '/' },
-        {
-          text: 'Category',
-          to: `/category?id=${this.selectedCategory.id}&categoryName=${this.selectedCategory.name}`,
-        },
-        { text: 'Movie', active: true },
-      ]
+      return []
     },
   },
   methods: {

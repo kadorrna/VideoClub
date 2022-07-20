@@ -88,6 +88,7 @@ export default {
   },
   beforeDestroy() {
     this.clearMovieDetailsAction()
+    this.resetMoviesAction() 
   },
   methods: {
     ...mapActions({
