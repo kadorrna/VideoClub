@@ -1,7 +1,7 @@
 import { mount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import { BSpinner, BContainer } from 'bootstrap-vue'
-import default from '~/layouts/default'
+import DefaultLayout from '~/layouts/default'
 
 const stubs = {
   BSpinner,
@@ -31,7 +31,7 @@ describe('default.vue', () => {
       errorMessage: () => '',
     }
     const store = new Vuex.Store({ state, getters })
-    const wrapper = mount(VideoClubLayout, {
+    const wrapper = mount(DefaultLayout, {
       localVue,
       store,
       mocks,
@@ -52,7 +52,7 @@ describe('default.vue', () => {
       errorMessage: () => '',
     }
     const store = new Vuex.Store({ state, getters })
-    const wrapper = mount(VideoClubLayout, {
+    const wrapper = mount(DefaultLayout, {
       localVue,
       store,
       mocks,

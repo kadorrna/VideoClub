@@ -28,6 +28,7 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
+  name: 'DefaultLayout',
   computed: {
     ...mapGetters({
       errorMessage: 'errorMessage',
