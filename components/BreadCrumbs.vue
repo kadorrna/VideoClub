@@ -1,27 +1,19 @@
 <template>
-  <b-breadcrumb :items="items"></b-breadcrumb>
+  <b-breadcrumb
+    v-if="selectedCategory.id"
+    :items="getCrumbsItems"
+  ></b-breadcrumb>
 </template>
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'BreadCrumbs',
-  data() {
-    return {
-      items: this.getCrumbs(),
-    }
-  },
   computed: {
     ...mapGetters({
       selectedCategory: 'categories/selectedCategory',
     }),
-  },
-  watch: {
-    '$route.params'() {
-      this.items = this.getCrumbs()
-    },
-  },
-  methods: {
-    getCrumbs() {
+    getCrumbsItems() {
+      this.setSelectedCategoryIfNeeded(localStorage)
       if (this.$nuxt.$route.name === 'index') {
         return [{ text: 'Home', active: true }]
       }
@@ -39,6 +31,22 @@ export default {
         },
         { text: 'Movie', active: true },
       ]
+    },
+  },
+  methods: {
+    ...mapActions({
+      setSelectedCategoryAction: 'categories/setSelectedCategoryAction',
+    }),
+    setSelectedCategoryIfNeeded(localStorage) {
+      if (!this.selectedCategory.id && this.$nuxt.$route.name !== 'index') {
+        const persistedSelectedCategory = JSON.parse(
+          localStorage.getItem('vuexMovies')
+        ).persistedData.selectedCategory
+        this.setSelectedCategoryAction({
+          id: persistedSelectedCategory.id,
+          name: persistedSelectedCategory.name,
+        })
+      }
     },
   },
 }

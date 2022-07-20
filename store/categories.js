@@ -1,8 +1,11 @@
+// import VuexPersistence from 'vuex-persist'
+// import createPersistedState from 'vuex-persistedstate'
 import { getCategoriesService } from '@/services'
 
 export const state = () => ({
   list: [],
   selectedCategory: {},
+  persistedState: null,
 })
 
 export const getters = {
@@ -41,6 +44,7 @@ export const actions = {
   },
   setSelectedCategoryAction({ commit }, category) {
     commit('setSelectedCategory', category)
+    commit('PERSIST_DATA', { selectedCategory: category }, { root: true })
   },
   clearSelectedCategoryAction({ commit }) {
     commit('clearSelectedCategory')
