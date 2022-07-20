@@ -17,7 +17,7 @@ const state = {
 }
 
 const getters = {
-  selectedMovies: () => [
+  'cart/selectedMovies': () => [
     { title: 'Title 1', id: 1 },
     { title: 'Title 2', id: 2 },
   ],

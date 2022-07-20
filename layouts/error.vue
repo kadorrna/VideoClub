@@ -1,19 +1,19 @@
 <template>
   <BContainer class="text-center content">
     <div class="danger">
-      <h1 class="text-danger">{{ errorMessage }}</h1>
+      <h1 class="text-danger">{{ error.message }}</h1>
     </div>
     <img src="~/assets/techDiff.jpeg" />
   </BContainer>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 export default {
-  computed: {
-    ...mapGetters(['errorMessage']),
-    errorMessage() {
-      return this.errorMessage
+  name: 'error',
+  props: {
+    error: {
+      type: Object,
+      required: true,
     },
   },
 }

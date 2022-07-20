@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import {
   BContainer,
   BCol,
+  BRow,
   BIcon,
   BModal,
   BBreadcrumb,
@@ -25,13 +26,13 @@ const actions = {
 }
 
 const getters = {
-  movie: () => movie,
+  'movies/movie': () => movie,
   isFetching: () => false,
-  selectedCategory: () => ({
+  'categories/selectedCategory': () => ({
     id: 1,
     name: 'category',
   }),
-  selectedMovies: () => [],
+  'cart/selectedMovies': () => [],
 }
 const state = {
   fetching: false,
@@ -50,6 +51,7 @@ const stubs = {
   BContainer,
   BCol,
   BIcon,
+  BRow,
   BModal,
   BBreadcrumb,
   BBreadcrumbItem,
@@ -74,11 +76,8 @@ describe('MoviePage', () => {
     })
 
     test('Displays basic movie info', () => {
-      const div = wrapper.find('h1')
-      expect(wrapper.vm).toBeTruthy()
-      expect(div.text()).toContain('Testing Movie')
-      const overview = wrapper.find('.overview')
-      expect(overview.text()).toBe('This is a test overview')
+      const overView = wrapper.find('.overview')
+      expect(overView.text()).toBe(movie.overview)
     })
   })
 })
