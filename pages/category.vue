@@ -28,9 +28,20 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({ movies: 'movies/movies' }),
+    ...mapGetters({
+      movies: 'movies/movies',
+      selectedCategory: 'categories/selectedCategory',
+    }),
   },
   beforeMount() {
+    if (this.genreName === 'undefined' && this.genreId === 'undefined') {
+      const persistedSelectedCategory = JSON.parse(
+        localStorage.getItem('vuexMovies')
+      ).persistedData.selectedCategory
+      this.genreId = persistedSelectedCategory.id
+      this.genreName = persistedSelectedCategory.name
+    }
+
     this.getMoviesAction(this.genreId)
     this.resetMoviesAction()
     this.setStateSelectedCategory({ id: this.genreId, name: this.genreName })

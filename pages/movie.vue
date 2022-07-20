@@ -81,14 +81,22 @@ export default {
       return ''
     },
   },
+  beforeMount() {
+    if(!this.movie.id){
+      this.getMoviedetails()
+    }
+  },
   beforeDestroy() {
     this.clearMovieDetailsAction()
+    this.resetMoviesAction() 
   },
   methods: {
     ...mapActions({
       getMovieDetailsAction: 'movies/getMovieDetailsAction',
       addToSelectedMoviesAction: 'cart/addToSelectedMoviesAction',
       clearMovieDetailsAction: 'movies/clearMovieDetailsAction',
+      setMovieDetailsAction: 'movies/setMovieDetailsAction',
+      resetMoviesAction: 'movies/resetMoviesAction',
     }),
     async getMoviedetails() {
       await this.getMovieDetailsAction(this.$route.query.id)

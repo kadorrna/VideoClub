@@ -90,8 +90,9 @@ export const actions = {
     commit('toggleFetching', null, { root: true })
     await getMovieDetailsService(query)
       .then((movie) => {
-        commit('toggleFetching', null, { root: true })
         commit('setMovie', movie)
+        commit('PERSIST_DATA', { movie }, { root: true })
+        commit('toggleFetching', null, { root: true })
       })
       .catch((err) => {
         commit('toggleFetching', null, { root: true })
@@ -100,7 +101,9 @@ export const actions = {
         })
       })
   },
-
+  setMovieDetailsAction({ commit }, movie) {
+    commit('setMovie', movie)
+  },
   clearMovieDetailsAction({ commit }) {
     commit('clearMovie')
   },

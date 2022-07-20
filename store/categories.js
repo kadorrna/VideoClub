@@ -41,6 +41,7 @@ export const actions = {
   },
   setSelectedCategoryAction({ commit }, category) {
     commit('setSelectedCategory', category)
+    commit('PERSIST_DATA', { selectedCategory: category }, { root: true })
   },
   clearSelectedCategoryAction({ commit }) {
     commit('clearSelectedCategory')
