@@ -10,9 +10,9 @@ localVue.use(Vuex)
 
 describe('CategoryPage', () => {
   const actions = {
-    setSelectedCategoryAction: jest.fn(),
-    resetMoviesAction: jest.fn(),
-    getMoviesAction: jest.fn(),
+    'categories/setSelectedCategoryAction': jest.fn(),
+    'movies/resetMoviesAction': jest.fn(),
+    'movies/getMoviesAction': jest.fn(),
   }
   const mockRoute = {
     query: {
@@ -32,7 +32,7 @@ describe('CategoryPage', () => {
     getters: {
       isFetching: () => false,
       errorMessage: () => '',
-      movies: () => [
+      'movies/movies': () => [
         {
           title: 'Movie 1',
           id: '1',

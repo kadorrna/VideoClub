@@ -1,7 +1,7 @@
 import { mount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import { BSpinner, BContainer } from 'bootstrap-vue'
-import VideoClubLayout from '~/layouts/VideoClubLayout'
+import default from '~/layouts/default'
 
 const stubs = {
   BSpinner,
@@ -21,7 +21,7 @@ const state = {
   errorMessage: '',
 }
 
-describe('VideoClubLayout.vue', () => {
+describe('default.vue', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
 
@@ -29,7 +29,6 @@ describe('VideoClubLayout.vue', () => {
     const getters = {
       isFetching: () => false,
       errorMessage: () => '',
-      selectedMovies: () => [],
     }
     const store = new Vuex.Store({ state, getters })
     const wrapper = mount(VideoClubLayout, {
@@ -51,7 +50,6 @@ describe('VideoClubLayout.vue', () => {
     const getters = {
       isFetching: () => true,
       errorMessage: () => '',
-      selectedMovies: () => [],
     }
     const store = new Vuex.Store({ state, getters })
     const wrapper = mount(VideoClubLayout, {

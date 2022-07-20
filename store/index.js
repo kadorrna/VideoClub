@@ -1,18 +1,20 @@
-// import Vue from 'vue'
-import Vuex from 'vuex'
-import { state } from './state'
-import * as actions from './actions'
-import * as mutations from './mutations'
-import * as getters from './getters'
-
-// Vue.use(Vuex)
-const createStore = () => {
-  return new Vuex.Store({
-    state,
-    mutations,
-    actions,
-    getters,
-  })
+export const state = () => ({
+  fetching: false,
+  errorMessage: '',
+})
+export const getters = {
+  isFetching(state) {
+    return state.fetching
+  },
+  errorMessage(state) {
+    return state.errorMessage
+  },
 }
-
-export default createStore
+export const mutations = {
+  toggleFetching(state) {
+    state.fetching = !state.fetching
+  },
+  setErrorMessage(state, msg) {
+    state.errorMessage = msg
+  },
+}

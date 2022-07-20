@@ -1,72 +1,51 @@
 <template>
-  <video-club-layout>
-    <template #pageTitle> {{ movie.title }} </template>
-    <template #breadcrumb>
-      <BBreadcrumb>
-        <BBreadcrumbItem to="/">
-          <BIcon
-            icon="house-fill"
-            scale="1.25"
-            shift-v="1.25"
-            aria-hidden="true"
-          ></BIcon>
-          Home
-        </BBreadcrumbItem>
-        <BBreadcrumbItem
-          :to="`/category?id=${selectedCategory.id}&categoryName=${selectedCategory.name}`"
+      <BContainer>
+        <BRow
+          v-if="movie && movie.poster_path"
+          class="itemDetailContainer d-flex row mt-5"
         >
-          Category
-        </BBreadcrumbItem>
-      </BBreadcrumb>
-    </template>
-    <template #default>
-      <div
-        v-if="movie && movie.poster_path"
-        class="itemDetailContainer d-flex row mt-5"
-      >
-        <BCol lg="6" xs="12" md="12" sm="12" class="poster-container">
-          <img :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" />
-        </BCol>
-        <BCol lg="6" xs="12" md="12" sm="12" class="text-left">
-          <div class="col-12">{{ movie.release_date }} <br /></div>
-          <div class="col-12">
-            {{ movie.vote_average }} from ({{ movie.vote_count }} votes)
-          </div>
-          <div
-            class="col-12"
-            :class="[movie && movie.status ? movie.status.toLowerCase() : '']"
-          >
-            {{ movie.status }}
-            <b-icon :icon="`${getIcon}`" font-scale="1" />
-          </div>
-          <BCol class="overview">
-            {{ movie.overview }}
+          <BCol lg="6" xs="12" md="12" sm="12" class="poster-container">
+            <img :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" />
           </BCol>
-          <div class="col-12 d-flex mt-3">
-            <a
-              :href="`https://www.imdb.com/title/${movie.imdb_id}`"
-              class="imdbImg"
+          <BCol lg="6" xs="12" md="12" sm="12" class="text-left">
+            <div class="col-12">{{ movie.release_date }} <br /></div>
+            <div class="col-12">
+              {{ movie.vote_average }} from ({{ movie.vote_count }} votes)
+            </div>
+            <div
+              class="col-12"
+              :class="[movie && movie.status ? movie.status.toLowerCase() : '']"
             >
-              <img src="~/assets/imdb-icon.png" style="width: 32px" />
-            </a>
-            <BIcon
-              icon="plus-circle-fill"
-              font-scale="2"
-              class="addMovieIcon ml-2"
-              :class="[isSelected ? 'text-muted' : '']"
-              :disabled="isSelected"
-              @click="addToCart(movie.id, movie.title)"
-            />
-          </div>
-        </BCol>
-      </div>
+              {{ movie.status }}
+              <b-icon :icon="`${getIcon}`" font-scale="1" />
+            </div>
+            <div class="col-12 overview">
+              {{ movie.overview }}
+            </div>
+            <div class="col-12 d-flex mt-3">
+              <a
+                :href="`https://www.imdb.com/title/${movie.imdb_id}`"
+                class="imdbImg"
+              >
+                <img src="~/assets/imdb-icon.png" style="width: 32px" />
+              </a>
+              <BIcon
+                icon="plus-circle-fill"
+                font-scale="2"
+                class="addMovieIcon ml-2"
+                :class="[isSelected ? 'text-muted' : '']"
+                :disabled="isSelected"
+                @click="addToCart(movie.id, movie.title)"
+              />
+            </div>
+          </BCol>
+        </BRow>
+      </BContainer>
     </template>
-  </video-club-layout>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import VideoClubLayout from '~/layouts/VideoClubLayout.vue'
 
 const icon = {
   Released: 'star-fill',
@@ -79,9 +58,15 @@ const icon = {
 
 export default {
   name: 'MoviePage',
-  components: { VideoClubLayout },
+  async fetch() {
+    await this.getMoviedetails()
+  },
   computed: {
-    ...mapGetters(['movie', 'selectedCategory']),
+    ...mapGetters({
+      movie: 'movies/movie',
+      selectedCategory: 'categories/selectedCategory',
+      selectedMovies: 'cart/selectedMovies',
+    }),
     getIcon() {
       if (this && this.movie && this.movie.status)
         return icon[this.movie.status.trim()]
@@ -89,25 +74,22 @@ export default {
     },
     isSelected() {
       if (this.movie && this.movie.id) {
-        return this.$store.state.selectedMovies.some(
+        return this.selectedMovies.some(
           (element) => element.id === this.movie.id
         )
       }
       return ''
     },
   },
-  async beforeMount() {
-    await this.getMoviedetails()
-  },
   beforeDestroy() {
     this.clearMovieDetailsAction()
   },
   methods: {
-    ...mapActions([
-      'getMovieDetailsAction',
-      'addToSelectedMoviesAction',
-      'clearMovieDetailsAction',
-    ]),
+    ...mapActions({
+      getMovieDetailsAction: 'movies/getMovieDetailsAction',
+      addToSelectedMoviesAction: 'cart/addToSelectedMoviesAction',
+      clearMovieDetailsAction: 'movies/clearMovieDetailsAction',
+    }),
     async getMoviedetails() {
       await this.getMovieDetailsAction(this.$route.query.id)
     },

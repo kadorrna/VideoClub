@@ -9,13 +9,13 @@
       data-icon-modal-button
     />
     <BModal id="modal-scoped" hide-footer :static="true">
-      <div class="cartList">
+      <div class="cartList text-left">
         <h1>
           {{ values.length > 0 ? 'Movies added' : 'No movies added' }}
         </h1>
         <div v-if="values.length > 0">
           <div v-for="movie in values" :key="movie.id" class="d-flex my-4">
-            <div class="col-10" data-movie-title>{{ movie.title }}</div>
+            <div class="col-10 pl-0" data-movie-title>{{ movie.title }}</div>
             <div class="col-2">
               <BIcon
                 icon="trash-fill"
@@ -44,7 +44,9 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'CartComponent',
   computed: {
-    ...mapGetters(['selectedMovies']),
+    ...mapGetters({
+      selectedMovies: 'cart/selectedMovies',
+    }),
     values() {
       return this.selectedMovies
     },
@@ -53,10 +55,10 @@ export default {
     },
   },
   methods: {
-    ...mapActions([
-      'clearSelectedMoviesAction',
-      'removeFromSelectedMoviesAction',
-    ]),
+    ...mapActions({
+      clearSelectedMoviesAction: 'cart/clearSelectedMoviesAction',
+      removeFromSelectedMoviesAction: 'cart/removeFromSelectedMoviesAction',
+    }),
     removeFromSelected(movieId, movieTitle) {
       this.removeFromSelectedMoviesAction(movieId)
       this.toastMsg(movieTitle + ' has been removed from selected')

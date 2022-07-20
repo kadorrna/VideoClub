@@ -1,44 +1,26 @@
 <template>
-  <video-club-layout>
-    <template #pageTitle>
-      <h1>{{ genreName }}</h1>
-    </template>
-    <template #breadcrumb>
-      <BBreadcrumb>
-        <BBreadcrumbItem to="/">
-          <BIcon
-            icon="house-fill"
-            scale="1.25"
-            shift-v="1.25"
-            aria-hidden="true"
-          ></BIcon>
-          Home
-        </BBreadcrumbItem>
-      </BBreadcrumb>
-    </template>
-    <template #default>
-      <div class="list-container">
-        <live-search @search-by-title="searchByTitle" />
-        <movies-list :movies="movies" />
-        <infinite-loading
-          spinner="spiral"
-          force-use-infinite-wrapper
-          @infinite="infiniteScroll"
-        />
-      </div>
-    </template>
-  </video-club-layout>
+  <div>
+    <live-search @search-by-title="searchByTitle" />
+    <movies-list :movies="movies" />
+    <infinite-loading
+      spinner="spiral"
+      force-use-infinite-wrapper
+      @infinite="infiniteScroll"
+    />
+  </div>
 </template>
-
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import LiveSearch from '~/components/LiveSearch.vue'
 import MoviesList from '~/components/MoviesList.vue'
-import VideoClubLayout from '~/layouts/VideoClubLayout.vue'
+import LiveSearch from '~/components/LiveSearch.vue'
 
 export default {
   name: 'CategoryPage',
-  components: { MoviesList, VideoClubLayout, LiveSearch },
+  components: {
+    MoviesList,
+    LiveSearch,
+  },
+  layout: 'default',
   data() {
     return {
       genreName: this.$route.query.categoryName,
@@ -46,20 +28,24 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['movies']),
+    ...mapGetters({ movies: 'movies/movies' }),
   },
   beforeMount() {
+    this.getMoviesAction(this.genreId)
     this.resetMoviesAction()
     this.setStateSelectedCategory({ id: this.genreId, name: this.genreName })
-    this.getMoviesAction()
+  },
+  beforeDestroy() {
+    this.clearSelectedCategory()
   },
   methods: {
-    ...mapActions([
-      'getMoviesAction',
-      'searchByTitleAction',
-      'resetMoviesAction',
-      'setSelectedCategoryAction',
-    ]),
+    ...mapActions({
+      getMoviesAction: 'movies/getMoviesAction',
+      searchByTitleAction: 'movies/searchByTitleAction',
+      resetMoviesAction: 'movies/resetMoviesAction',
+      setSelectedCategoryAction: 'categories/setSelectedCategoryAction',
+      clearSelectedCategory: 'categories/clearSelectedCategoryAction',
+    }),
     setStateSelectedCategory(category) {
       this.setSelectedCategoryAction(category)
     },
@@ -68,7 +54,7 @@ export default {
         this.searchByTitleAction(payload)
       } else {
         this.resetMoviesAction()
-        this.getMoviesAction()
+        this.getMoviesAction(this.genreId)
       }
     },
     infiniteScroll($state) {
@@ -77,17 +63,6 @@ export default {
         $state.loaded()
       }, 500)
     },
-    updateSearchPage(page) {
-      const oldPage = page - 1
-      this.url = this.url.replace('&page=' + oldPage, '&page=' + page)
-    },
   },
 }
 </script>
-<style scoped>
-@media only screen and (max-width: 600px) {
-  .list-container {
-    max-height: 60vh;
-  }
-}
-</style>
