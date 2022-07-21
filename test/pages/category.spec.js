@@ -1,7 +1,8 @@
-import { mount, createLocalVue, RouterLinkStub } from '@vue/test-utils'
-import { BContainer, BAlert, BCard } from 'bootstrap-vue'
-
+import { mount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
+import { BContainer, BAlert, BCard, BFormInput } from 'bootstrap-vue'
+import LiveSearch from '~/components/liveSearch.vue'
+import MoviesList from '~/components/moviesList.vue'
 
 import CategoryPage from '~/pages/category.vue'
 
@@ -60,10 +61,12 @@ describe('CategoryPage', () => {
       },
     },
     stubs: {
-      NuxtLink: RouterLinkStub,
       BContainer,
       BAlert,
       BCard,
+      BFormInput,
+      LiveSearch,
+      MoviesList,
     },
   })
 

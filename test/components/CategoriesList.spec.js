@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { BCard } from 'bootstrap-vue'
-import CategoriesList from '~/components/CategoriesList.vue'
+import CategoriesList from '~/components/categoriesList.vue'
 
 let wrapper
 const category1 = {
@@ -13,9 +13,6 @@ const category2 = {
 }
 
 const categories = [category1, category2]
-const methods = {
-  goToCategory: jest.fn(),
-}
 
 describe('CategoriesList.vue', () => {
   describe('when component is mounted', () => {
@@ -24,9 +21,13 @@ describe('CategoriesList.vue', () => {
         propsData: {
           categories,
         },
-        methods,
         stubs: {
           BCard,
+        },
+        mocks: {
+          $router: {
+            push: jest.fn(),
+          },
         },
       })
     })
@@ -36,9 +37,10 @@ describe('CategoriesList.vue', () => {
     })
 
     it('calls goToItem method when card is clicked', () => {
+      const spyIt = jest.spyOn(wrapper.vm, 'goToCategory')
       const bCard = wrapper.findComponent(BCard)
       bCard.trigger('click')
-      expect(methods.goToCategory).toHaveBeenCalled()
+      expect(spyIt).toHaveBeenCalled()
     })
   })
 })

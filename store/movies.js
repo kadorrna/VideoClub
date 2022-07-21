@@ -1,4 +1,8 @@
-import { getMoviesService, getMovieDetailsService } from '@/services'
+import {
+  getMoviesService,
+  getMovieDetailsService,
+  findMovieByTitleAction,
+} from '@/services'
 
 export const state = () => ({
   movies: {
@@ -55,7 +59,7 @@ export const actions = {
   },
   async findMoviesByTitleAction({ commit, state }) {
     commit('toggleFetching', null, { root: true })
-    await getMoviesService(state.movies.searchQuery)
+    await findMovieByTitleAction(state.movies.searchQuery)
       .then((movies) => {
         commit('setMoviesList', movies)
         commit('toggleFetching', null, { root: true })
@@ -72,15 +76,12 @@ export const actions = {
   async getMoviesAction({ commit, getters }, categoryId) {
     const page = getters.page
 
-    commit('toggleFetching', null, { root: true })
     await getMoviesService(categoryId, page)
       .then((movies) => {
         commit('addToMoviesList', movies)
-        commit('toggleFetching', null, { root: true })
         commit('nextPage')
       })
       .catch((err) => {
-        commit('toggleFetching', null, { root: true })
         commit('setErrorMessage', 'Something went wrong: ' + err, {
           root: true,
         })

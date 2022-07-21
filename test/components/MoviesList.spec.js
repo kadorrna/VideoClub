@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { BCard } from 'bootstrap-vue'
-import MoviesList from '~/components/MoviesList.vue'
+import MoviesList from '~/components/moviesList.vue'
 
 let wrapper
 const movie1 = {
@@ -13,9 +13,6 @@ const movie2 = {
 }
 
 const movies = [movie1, movie2]
-const methods = {
-  goToItem: jest.fn(),
-}
 
 describe('MoviesList.vue', () => {
   describe('when component is mounted', () => {
@@ -24,9 +21,13 @@ describe('MoviesList.vue', () => {
         propsData: {
           movies,
         },
-        methods,
         stubs: {
           BCard,
+        },
+        mocks: {
+          $router: {
+            push: jest.fn(),
+          },
         },
       })
     })
@@ -36,9 +37,10 @@ describe('MoviesList.vue', () => {
     })
 
     it('calls goToItem method when card is clicked', () => {
+      const spyIt = jest.spyOn(wrapper.vm, 'goToItem')
       const bCard = wrapper.findComponent(BCard)
       bCard.trigger('click')
-      expect(methods.goToItem).toHaveBeenCalled()
+      expect(spyIt).toHaveBeenCalled()
     })
   })
 })

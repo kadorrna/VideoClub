@@ -11,9 +11,9 @@ export default {
       movie: 'movies/movie',
     }),
     getTitle() {
-      if (this.$nuxt.$route.name === 'index') {
+      if (this.$route.name === 'index') {
         return 'Movies'
-      } else if (this.$nuxt.$route.name === 'category') {
+      } else if (this.$route.name === 'category') {
         return this.selectedCategory.name
       }
       return this.movie.title

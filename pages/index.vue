@@ -1,16 +1,12 @@
 <template>
-  <categories-list :categories="categories" />
+  <CategoriesList :categories="categories" />
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import CategoriesList from '~/components/CategoriesList.vue'
 
 export default {
   name: 'IndexPage',
-  components: {
-    CategoriesList,
-  },
   async fetch() {
     await this.getCategoriesAction()
   },

@@ -1,7 +1,7 @@
 import { mount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import { BIcon, BModal, BButton } from 'bootstrap-vue'
-import CartComponent from '~/components/CartComponent.vue'
+import CartComponent from '~/components/cartComponent.vue'
 
 const stubs = {
   BIcon,

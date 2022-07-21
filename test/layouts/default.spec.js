@@ -1,16 +1,36 @@
 import { mount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
-import { BSpinner, BContainer } from 'bootstrap-vue'
+import {
+  BSpinner,
+  BContainer,
+  BBreadcrumb,
+  BBreadcrumbItem,
+  BModal,
+  BIcon,
+} from 'bootstrap-vue'
 import DefaultLayout from '~/layouts/default'
+import PageTitle from '~/components/pageTitle.vue'
+import BreadCrumbs from '~/components/breadCrumbs.vue'
+import CartComponent from '~/components/cartComponent.vue'
 
 const stubs = {
   BSpinner,
   BContainer,
+  BBreadcrumb,
+  BBreadcrumbItem,
+  BModal,
+  BIcon,
+  PageTitle,
+  BreadCrumbs,
+  CartComponent,
 }
 
 const mocks = {
   $nuxt: {
     error: jest.fn(),
+  },
+  $route: {
+    name: 'index',
   },
 }
 
@@ -20,16 +40,21 @@ const state = {
   fetching: false,
   errorMessage: '',
 }
+let getters = {
+  isFetching: () => false,
+  errorMessage: () => '',
+  selectedMovies: () => [],
+  selectedCategory: () => {},
+  'categories/selectedCategory': () => {},
+  'movies/movie': () => {},
+  'cart/selectedMovies': () => [],
+}
 
 describe('default.vue', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
 
   describe('no error set', () => {
-    const getters = {
-      isFetching: () => false,
-      errorMessage: () => '',
-    }
     const store = new Vuex.Store({ state, getters })
     const wrapper = mount(DefaultLayout, {
       localVue,
@@ -47,10 +72,7 @@ describe('default.vue', () => {
   })
 
   describe('is fetching data', () => {
-    const getters = {
-      isFetching: () => true,
-      errorMessage: () => '',
-    }
+    getters = { ...getters, isFetching: () => true }
     const store = new Vuex.Store({ state, getters })
     const wrapper = mount(DefaultLayout, {
       localVue,
