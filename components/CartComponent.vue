@@ -54,10 +54,19 @@ export default {
       return this.values.length > 0
     },
   },
+  beforeMount() {
+    if (this.selectedMovies.length === 0) {
+      const persistedSelectedMovies = JSON.parse(
+        localStorage.getItem('vuexMovies')
+      ).persistedData.selectedMovies
+      this.loadSelectedMoviesFromStorage(persistedSelectedMovies)
+    }
+  },
   methods: {
     ...mapActions({
       clearSelectedMoviesAction: 'cart/clearSelectedMoviesAction',
       removeFromSelectedMoviesAction: 'cart/removeFromSelectedMoviesAction',
+      loadSelectedMoviesFromStorage: 'cart/loadSelectedMoviesFromStorage',
     }),
     removeFromSelected(movieId, movieTitle) {
       this.removeFromSelectedMoviesAction(movieId)

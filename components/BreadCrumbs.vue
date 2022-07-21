@@ -38,7 +38,11 @@ export default {
       setSelectedCategoryAction: 'categories/setSelectedCategoryAction',
     }),
     setSelectedCategoryIfNeeded(localStorage) {
-      if (!this.selectedCategory.id && this.$nuxt.$route.name !== 'index') {
+      if (
+        !this.selectedCategory.id &&
+        this.$nuxt.$route.name !== 'index' &&
+        localStorage.getItem('vuexMovies') !== null
+      ) {
         const persistedSelectedCategory = JSON.parse(
           localStorage.getItem('vuexMovies')
         ).persistedData.selectedCategory

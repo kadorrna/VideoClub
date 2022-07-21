@@ -20,15 +20,32 @@ export const mutations = {
   addToSelectedMovies(state, newMovie) {
     state.selectedMovies.push(newMovie)
   },
+  LOAD_MOVIES_FROM_STORAGE(state, moviesList) {
+    state.selectedMovies = moviesList
+  },
 }
 export const actions = {
   clearSelectedMoviesAction({ commit }) {
     commit('clearSelectedMovies')
+    commit('PERSIST_DATA', { selectedMovies: [] }, { root: true })
   },
-  addToSelectedMoviesAction({ commit }, params) {
+  addToSelectedMoviesAction({ commit, state }, params) {
     commit('addToSelectedMovies', params)
+    commit(
+      'PERSIST_DATA',
+      { selectedMovies: state.selectedMovies },
+      { root: true }
+    )
   },
-  removeFromSelectedMoviesAction({ commit }, movieId) {
+  loadSelectedMoviesFromStorage({ commit }, moviesList) {
+    commit('LOAD_MOVIES_FROM_STORAGE', moviesList)
+  },
+  removeFromSelectedMoviesAction({ commit, state }, movieId) {
     commit('removeFromSelectedMovies', movieId)
+    commit(
+      'PERSIST_DATA',
+      { selectedMovies: state.selectedMovies },
+      { root: true }
+    )
   },
 }
