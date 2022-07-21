@@ -20,7 +20,7 @@ export const mutations = {
   addToSelectedMovies(state, newMovie) {
     state.selectedMovies.push(newMovie)
   },
-  LOAD_MOVIES_FROM_STORAGE(state, moviesList) {
+  loadMoviesFromStorage(state, moviesList) {
     state.selectedMovies = moviesList
   },
 }
@@ -38,7 +38,7 @@ export const actions = {
     )
   },
   loadSelectedMoviesFromStorage({ commit }, moviesList) {
-    commit('LOAD_MOVIES_FROM_STORAGE', moviesList)
+    commit('loadMoviesFromStorage', moviesList)
   },
   removeFromSelectedMoviesAction({ commit, state }, movieId) {
     commit('removeFromSelectedMovies', movieId)

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <live-search @search-by-title="searchByTitle" />
-    <movies-list :movies="movies" />
+    <LiveSearch @search-by-title="searchByTitle" />
+    <MoviesList :movies="movies" />
     <infinite-loading
       spinner="spiral"
       force-use-infinite-wrapper
@@ -11,15 +11,9 @@
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import MoviesList from '~/components/MoviesList.vue'
-import LiveSearch from '~/components/LiveSearch.vue'
 
 export default {
   name: 'CategoryPage',
-  components: {
-    MoviesList,
-    LiveSearch,
-  },
   layout: 'default',
   data() {
     return {
@@ -34,7 +28,11 @@ export default {
     }),
   },
   beforeMount() {
-    if (this.genreName === 'undefined' && this.genreId === 'undefined') {
+    if (
+      this.genreName === 'undefined' &&
+      this.genreId === 'undefined' &&
+      localStorage.getItem('vuexMovies') !== null
+    ) {
       const persistedSelectedCategory = JSON.parse(
         localStorage.getItem('vuexMovies')
       ).persistedData.selectedCategory

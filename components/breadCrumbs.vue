@@ -12,25 +12,24 @@ export default {
     getCrumbsItems() {
       if (process.client) {
         this.setSelectedCategoryIfNeeded(localStorage)
-        if (this.$nuxt.$route.name === 'index') {
-          return [{ text: 'Home', active: true }]
-        }
-        if (this.$nuxt.$route.name === 'category') {
-          return [
-            { text: 'Home', to: '/' },
-            { text: 'Category', active: true },
-          ]
-        }
+      }
+      if (this.$route.name === 'index') {
+        return [{ text: 'Home', active: true }]
+      }
+      if (this.$route.name === 'category') {
         return [
           { text: 'Home', to: '/' },
-          {
-            text: 'Category',
-            to: `/category?id=${this.selectedCategory.id}&categoryName=${this.selectedCategory.name}`,
-          },
-          { text: 'Movie', active: true },
+          { text: 'Category', active: true },
         ]
       }
-      return []
+      return [
+        { text: 'Home', to: '/' },
+        {
+          text: 'Category',
+          to: `/category?id=${this.selectedCategory.id}&categoryName=${this.selectedCategory.name}`,
+        },
+        { text: 'Movie', active: true },
+      ]
     },
   },
   methods: {
@@ -40,7 +39,7 @@ export default {
     setSelectedCategoryIfNeeded(localStorage) {
       if (
         !this.selectedCategory.id &&
-        this.$nuxt.$route.name !== 'index' &&
+        this.$route.name !== 'index' &&
         localStorage.getItem('vuexMovies') !== null
       ) {
         const persistedSelectedCategory = JSON.parse(

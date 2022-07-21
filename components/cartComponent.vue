@@ -11,10 +11,14 @@
     <BModal id="modal-scoped" hide-footer :static="true">
       <div class="cartList text-left">
         <h1>
-          {{ values.length > 0 ? 'Movies added' : 'No movies added' }}
+          {{ selectedMovies.length > 0 ? 'Movies added' : 'No movies added' }}
         </h1>
-        <div v-if="values.length > 0">
-          <div v-for="movie in values" :key="movie.id" class="d-flex my-4">
+        <div v-if="selectedMovies.length > 0">
+          <div
+            v-for="movie in selectedMovies"
+            :key="movie.id"
+            class="d-flex my-4"
+          >
             <div class="col-10 pl-0" data-movie-title>{{ movie.title }}</div>
             <div class="col-2">
               <BIcon
@@ -47,19 +51,19 @@ export default {
     ...mapGetters({
       selectedMovies: 'cart/selectedMovies',
     }),
-    values() {
-      return this.selectedMovies
-    },
     areMoviesListed() {
-      return this.values.length > 0
+      return this.selectedMovies.length > 0
     },
   },
   beforeMount() {
-    if (this.selectedMovies.length === 0) {
+    if (
+      this.selectedMovies.length === 0 &&
+      localStorage.getItem('vuexMovies') !== null
+    ) {
       const persistedSelectedMovies = JSON.parse(
         localStorage.getItem('vuexMovies')
       ).persistedData.selectedMovies
-      this.loadSelectedMoviesFromStorage(persistedSelectedMovies)
+      this.loadSelectedMoviesFromStorage(persistedSelectedMovies || [])
     }
   },
   methods: {

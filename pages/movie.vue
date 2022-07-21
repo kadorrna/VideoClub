@@ -5,7 +5,7 @@
           class="itemDetailContainer d-flex row mt-5"
         >
           <BCol lg="6" xs="12" md="12" sm="12" class="poster-container">
-            <img :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" />
+            <img :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" data-movie-poster />
           </BCol>
           <BCol lg="6" xs="12" md="12" sm="12" class="text-left">
             <div class="col-12">{{ movie.release_date }} <br /></div>
@@ -17,7 +17,7 @@
               :class="[movie && movie.status ? movie.status.toLowerCase() : '']"
             >
               {{ movie.status }}
-              <b-icon :icon="`${getIcon}`" font-scale="1" />
+              <BIcon :icon="`${getIcon}`" font-scale="1" />
             </div>
             <div class="col-12 overview">
               {{ movie.overview }}
@@ -134,7 +134,7 @@ export default {
 .rumored,
 .inproduction,
 .planned {
-  color: yellow;
+  color: rgb(205, 205, 28);
 }
 
 .overview {

@@ -1,4 +1,4 @@
-import { mount, createLocalVue, RouterLinkStub } from '@vue/test-utils'
+import { mount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import {
   BContainer,
@@ -11,6 +11,7 @@ import {
 } from 'bootstrap-vue'
 import MoviePage from '~/pages/movie.vue'
 
+let wrapper
 const movie = {
   title: 'Testing Movie',
   poster_path: 'url_testing_poster_path',
@@ -23,9 +24,10 @@ const movie = {
 
 const actions = {
   getMovieDetailsAction: jest.fn(),
+  'movies/getMovieDetailsAction': jest.fn(),
 }
 
-const getters = {
+let getters = {
   'movies/movie': () => movie,
   isFetching: () => false,
   'categories/selectedCategory': () => ({
@@ -47,7 +49,6 @@ const mockRoute = {
 }
 
 const stubs = {
-  NuxtLink: RouterLinkStub,
   BContainer,
   BCol,
   BIcon,
@@ -57,27 +58,130 @@ const stubs = {
   BBreadcrumbItem,
 }
 
+const generalComponentValues = {
+  mocks: {
+    $route: mockRoute,
+    $nuxt: {
+      error: jest.fn(),
+    },
+  },
+  stubs,
+}
+
 describe('MoviePage', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
 
   describe('With Movie info', () => {
     const store = new Vuex.Store({ getters, actions, state })
-    const wrapper = mount(MoviePage, {
-      localVue,
-      store,
-      mocks: {
-        $route: mockRoute,
-        $nuxt: {
-          error: jest.fn(),
-        },
-      },
-      stubs,
+
+    beforeEach(() => {
+      wrapper = mount(MoviePage, {
+        localVue,
+        store,
+        ...generalComponentValues,
+      })
     })
 
-    test('Displays basic movie info', () => {
+    it('Displays basic movie info', () => {
       const overView = wrapper.find('.overview')
       expect(overView.text()).toBe(movie.overview)
+      const images = wrapper.findAll('[data-movie-poster]')
+      expect(images.exists()).toBe(true)
+      expect(images.length).toBe(1)
+    })
+
+    it('Shows star-fill icon', () => {
+      const iconContainer = wrapper.find('.released')
+      expect(iconContainer.exists()).toBe(true)
+    })
+
+    describe('when status Rumored', () => {
+      beforeEach(() => {
+        getters = {
+          'movies/movie': () => ({ ...movie, status: 'Rumored' }),
+        }
+        const store = new Vuex.Store({ getters, actions, state })
+        wrapper = mount(MoviePage, {
+          localVue,
+          store,
+          ...generalComponentValues,
+        })
+      })
+      it('Shows rumored style', () => {
+        const iconContainer = wrapper.find('.rumored')
+        expect(iconContainer.exists()).toBe(true)
+      })
+    })
+    describe('when status Planned', () => {
+      beforeEach(() => {
+        getters = {
+          'movies/movie': () => ({ ...movie, status: 'Planned' }),
+        }
+        const store = new Vuex.Store({ getters, actions, state })
+        wrapper = mount(MoviePage, {
+          localVue,
+          store,
+          ...generalComponentValues,
+        })
+      })
+      it('Shows lightbulb-fill icon', () => {
+        const iconContainer = wrapper.find('.planned')
+        expect(iconContainer.exists()).toBe(true)
+      })
+    })
+
+    describe('when status InProduction', () => {
+      beforeEach(() => {
+        getters = {
+          'movies/movie': () => ({ ...movie, status: 'InProduction' }),
+        }
+        const store = new Vuex.Store({ getters, actions, state })
+        wrapper = mount(MoviePage, {
+          localVue,
+          store,
+          ...generalComponentValues,
+        })
+      })
+
+      it('Shows camera-reels-fill icon', () => {
+        const iconContainer = wrapper.find('.inproduction')
+        expect(iconContainer.exists()).toBe(true)
+      })
+    })
+    describe('when status PostProduction', () => {
+      beforeEach(() => {
+        getters = {
+          'movies/movie': () => ({ ...movie, status: 'PosProduction' }),
+        }
+        const store = new Vuex.Store({ getters, actions, state })
+        wrapper = mount(MoviePage, {
+          localVue,
+          store,
+          ...generalComponentValues,
+        })
+      })
+      it('Shows camera-reels-fill icon', () => {
+        const iconContainer = wrapper.find('.posproduction')
+        expect(iconContainer.exists()).toBe(true)
+      })
+    })
+    describe('when status Canceled', () => {
+      beforeEach(() => {
+        getters = {
+          'movies/movie': () => ({ ...movie, status: 'Canceled' }),
+        }
+        const store = new Vuex.Store({ getters, actions, state })
+        wrapper = mount(MoviePage, {
+          localVue,
+          store,
+          ...generalComponentValues,
+        })
+      })
+      it('Shows x-circle-fill icon', () => {
+        const iconContainer = wrapper.find('.canceled')
+        expect(iconContainer.exists()).toBe(true)
+      })
     })
   })
 })

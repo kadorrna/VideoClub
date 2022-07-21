@@ -2,6 +2,7 @@ import { mount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import { BContainer, BCard, BIcon, BModal } from 'bootstrap-vue'
 import IndexPage from '~/pages/index.vue'
+import CategoriesList from '~/components/categoriesList.vue'
 
 const state = {
   fetching: false,
@@ -15,6 +16,7 @@ const stubs = {
   BCard,
   BIcon,
   BModal,
+  CategoriesList,
 }
 
 const getters = {

@@ -4,13 +4,13 @@
       class="d-flex col-lg-4 col-md-6 col-sm-12 col-xs-12 justify-content-end"
     >
       <form class="searchForm" @submit.prevent="submitSearch">
-        <b-form-input
+        <BFormInput
           v-model="searchQuery"
           class="col-12"
           type="text"
           placeholder="Search a movie..."
           @keyup="submitSearch"
-        ></b-form-input>
+        ></BFormInput>
       </form>
     </div>
   </div>
@@ -25,7 +25,13 @@ export default {
   },
   methods: {
     submitSearch() {
-      this.$emit('search-by-title', { searchQuery: this.searchQuery })
+      if (this.timer) {
+        clearTimeout(this.timer)
+        this.timer = null
+      }
+      this.timer = setTimeout(() => {
+        this.$emit('search-by-title', { searchQuery: this.searchQuery })
+      }, 300)
     },
     removeSearchQuery() {
       this.searchQuery = ''
