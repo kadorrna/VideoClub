@@ -5,7 +5,7 @@ import LiveSearch from '~/components/liveSearch.vue'
 let wrapper
 
 describe('LiveSearch.vue', () => {
-  describe('when component is mounted', () => {
+  describe('when component is shallowMounted', () => {
     beforeEach(function () {
       wrapper = shallowMount(LiveSearch, {
         stubs: {
