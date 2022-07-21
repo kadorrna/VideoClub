@@ -30,7 +30,6 @@ export default {
         },
         { text: 'Movie', active: true },
       ]
-      // }
     },
   },
   methods: {

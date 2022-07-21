@@ -30,7 +30,6 @@ export default {
         this.timer = null
       }
       this.timer = setTimeout(() => {
-        // your code
         this.$emit('search-by-title', { searchQuery: this.searchQuery })
       }, 300)
     },

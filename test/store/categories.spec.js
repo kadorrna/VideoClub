@@ -29,14 +29,10 @@ describe('Categories store', () => {
 
   describe('actions', () => {
     const commit = jest.fn()
-    // const newMovie = s{ id: 1, title: 'Testing Action Movie' }
-
-    let url = ''
 
     jest.mock('axios', () => ({
       get: (_url) => {
         return new Promise((resolve) => {
-          url = _url
           resolve(true)
         })
       },
